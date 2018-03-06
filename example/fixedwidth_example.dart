@@ -1,6 +1,11 @@
 import 'package:fixedwidth/fixedwidth.dart';
 
+
+class PersonRecord extends Record {
+
+}
+
 main() {
-  var awesome = new Awesome();
-  print('awesome: ${awesome.isAwesome}');
+  var record = new PersonRecord();
+  print(record.toString());
 }

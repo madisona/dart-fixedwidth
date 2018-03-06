@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library fixedwidth;
 
-export 'src/fixedwidth_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/exceptions.dart';
+export 'src/record.dart';
+export 'src/fields/fixedwidth_field.dart';
