@@ -3,5 +3,6 @@ dart:
  - stable
  - dev
 dart_task:
+  - test: --platform vm
   - dartanalyzer: --fatal-warnings lib
   - dartfmt
