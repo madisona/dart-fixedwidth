@@ -1,4 +1,3 @@
-
 import 'exceptions.dart' show FieldLengthException;
 import 'fields/fixedwidth_field.dart' show FixedWidthField;
 

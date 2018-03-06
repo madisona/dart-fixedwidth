@@ -8,14 +8,12 @@ void main() {
       field.value = "This is longer than allowed";
 
       expect(field.toString, throwsA(new isInstanceOf<FieldLengthException>()));
-
     });
 
     test('toString returns padded length', () {
       var field = new StringField(10);
       field.value = "John";
       expect(field.toString(), equals("John      "));
-
     });
 
     test('toString returns padded length when value is null', () {

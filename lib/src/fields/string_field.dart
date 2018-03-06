@@ -1,48 +1,26 @@
+class StringField {}
 
-class StringField {
+class DecimalField {}
 
-}
+class ImpliedDecimalField {}
 
-class DecimalField {
+class SignedImpliedDecimalField {}
 
-}
+class Record {}
 
-class ImpliedDecimalField {
+class IntegerField {}
 
-}
+class DateField {}
 
-class SignedImpliedDecimalField {
+class DateTimeField {}
 
-}
+class BooleanField {}
 
-class Record {
-
-}
-
-class IntegerField {
-
-}
-
-class DateField {
-
-}
-
-class DateTimeField {
-
-}
-
-class BooleanField {
-
-}
-
-class NullBooleanField {
-
-}
+class NullBooleanField {}
 
 class PostalCodeField {
   // todo: not sure about this dude
 }
-
 
 // Allows you to create a field on a record that is itself a complete
 // record. Similar to a ``ListField`` except it only occurs once.
@@ -55,16 +33,11 @@ class PostalCodeField {
 //     name = fields.StringField(length=100)
 //     phone_number = fields.FragmentField(record=Phone)
 //     email = fields.StringField(length=100)
-class FragmentField {
-
-}
+class FragmentField {}
 
 //ListField allows you to have a field made up of a number of
 //other records. Similar to COBOL's OCCURS.
 //parameters:
 //- record: which Record the field is made up of
 //- length: how many times that record occurs
-class ListField {
-
-
-}
+class ListField {}

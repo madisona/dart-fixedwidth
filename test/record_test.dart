@@ -2,7 +2,6 @@ import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
 class PersonRecord extends Record {
-
   @override
   Map<String, FixedWidthField> fields = {
     'firstName': new StringField(10, "John"),
