@@ -4,22 +4,22 @@ import '../exceptions.dart' show FieldLengthException;
  * Anytime `value` is accessed, it should always be its dart type representation
  */
 abstract class FixedWidthField {
-  String defaultValue;
+  dynamic defaultValue;
   int length;
-  String _val;
+  dynamic rawVal;
 
   FixedWidthField(this.length, [this.defaultValue]) {
     if (defaultValue != null) {
-      _val = defaultValue;
+      rawVal = defaultValue;
     }
   }
 
-  String get value => _val;
-  void set value(String val) => _val = val.trimRight();
+  dynamic get value => rawVal;
+  void set value(dynamic val) => rawVal = val.trimRight();
 
   String toString() {
     if (value == null) {
-      _val = "";
+      rawVal = "";
     }
     if (value.length > length) {
       throw new FieldLengthException(
