@@ -8,7 +8,7 @@ abstract class FixedWidthField {
   int length;
   dynamic rawVal;
 
-  FixedWidthField(this.length, [this.defaultValue]) {
+  FixedWidthField(this.length, {this.defaultValue}) {
     if (defaultValue != null) {
       rawVal = defaultValue;
     }

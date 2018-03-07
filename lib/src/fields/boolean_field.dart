@@ -4,7 +4,7 @@ import '../exceptions.dart';
 /// BooleanField is for a string output of Y/N
 class BooleanField extends FixedWidthField {
   BooleanField({int length = 1, bool defaultValue})
-      : super(length, defaultValue);
+      : super(length, defaultValue: defaultValue);
 
   void set value(dynamic val) {
     var stringified = val.toString();

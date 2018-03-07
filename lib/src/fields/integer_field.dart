@@ -2,8 +2,8 @@ import 'fixedwidth_field.dart' show FixedWidthField;
 import '../exceptions.dart';
 
 class IntegerField extends FixedWidthField {
-  IntegerField(int length, [int defaultValue = 0])
-      : super(length, defaultValue);
+  IntegerField(int length, {int defaultValue = 0})
+      : super(length, defaultValue: defaultValue);
 
   void set value(dynamic val) {
     try {

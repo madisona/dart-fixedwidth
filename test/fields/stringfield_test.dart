@@ -17,7 +17,7 @@ void main() {
     });
 
     test('toString returns padded length when value is null', () {
-      var field = new StringField(10, null);
+      var field = new StringField(10, defaultValue: null);
       expect(field.toString(), equals("          "));
     });
   });
