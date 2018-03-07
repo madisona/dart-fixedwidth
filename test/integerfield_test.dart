@@ -2,14 +2,11 @@ import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
 class IntRecordSample extends Record {
-  @override
-  Map<String, FixedWidthField> fields = {
-    'account': new IntegerField(3),
-    'txn_amount': new IntegerField(5),
-  };
+  IntegerField account = new IntegerField(3);
+  IntegerField txn_amount = new IntegerField(5);
 
   IntRecordSample() : super();
-  IntRecordSample.fromRecord(String record) : super.fromRecord(record);
+  IntRecordSample.fromRecord(String record) : super.fromString(record);
 }
 
 void main() {
@@ -40,8 +37,8 @@ void main() {
     test('fromRecord coerces value to int', () {
       var record = new IntRecordSample.fromRecord("01500950");
 
-      expect(record.fields['account'].value, equals(15));
-      expect(record.fields['txn_amount'].value, equals(950));
+      expect(record.account.value, equals(15));
+      expect(record.txn_amount.value, equals(950));
     });
 
     test('raises exception when bad input', () {
