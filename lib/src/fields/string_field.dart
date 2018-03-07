@@ -10,15 +10,9 @@ class StringField extends FixedWidthField {
 //
 //class SignedImpliedDecimalField {}
 //
-//class Record {}
-//
-//class IntegerField {}
-//
 //class DateField {}
 //
 //class DateTimeField {}
-//
-//class NullBooleanField {}
 //
 
 //// Allows you to create a field on a record that is itself a complete

@@ -1,13 +1,9 @@
+import 'dart:mirrors';
 import 'exceptions.dart' show FieldLengthException;
 import 'fields/fixedwidth_field.dart' show FixedWidthField;
-import 'dart:mirrors';
+import 'utils.dart' show isInstance;
 
-class isInstance<T> {
-  bool check(a) => a is T;
-  Type get type => T;
-}
-
-/// The base class for a fixed with record definition.
+/// The base class for a fixed width record definition.
 ///
 /// The Record class is made up of a series of FixedWidthField objects
 /// which declare the length of the fixed width field and the type.
