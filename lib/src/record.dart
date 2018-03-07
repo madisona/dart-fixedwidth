@@ -13,18 +13,18 @@ class isInstance<T> {
 /// which declare the length of the fixed width field and the type.
 ///
 ///     class AddressRecord extends Record {
-///       address = new StringField(length=50)
-///       address2 = new StringField(length=50)
-///       city = new StringField(length=20)
-///       state = new StringField(length=2)
-///       postal_code = new StringField(length=9)
+///       address = new StringField(length=50);
+///       address2 = new StringField(length=50);
+///       city = new StringField(length=20);
+///       state = new StringField(length=2);
+///       postal_code = new StringField(length=9);
 ///     }
 ///
 ///     var address = new AddressRecord()
 ///       ..address.value = "123 Main Street"
 ///       ..city.value = "Mountain View"
 ///       ..state.value = "CA"
-///       ..postal_code.value = "94043"
+///       ..postal_code.value = "94043";
 ///
 ///     Use `toString` to turn the object into its properly padded string:
 ///

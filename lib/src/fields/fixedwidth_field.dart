@@ -29,7 +29,3 @@ abstract class FixedWidthField {
     return value.padRight(length);
   }
 }
-
-class StringField extends FixedWidthField {
-  StringField(int length, [String defaultValue]) : super(length, defaultValue);
-}

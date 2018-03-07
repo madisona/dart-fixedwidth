@@ -1,5 +1,9 @@
-//class StringField {}
-//
+import 'fixedwidth_field.dart';
+
+class StringField extends FixedWidthField {
+  StringField(int length, [String defaultValue]) : super(length, defaultValue);
+}
+
 //class DecimalField {}
 //
 //class ImpliedDecimalField {}
@@ -14,14 +18,9 @@
 //
 //class DateTimeField {}
 //
-//class BooleanField {}
-//
 //class NullBooleanField {}
 //
-//class PostalCodeField {
-//  // todo: not sure about this dude
-//}
-//
+
 //// Allows you to create a field on a record that is itself a complete
 //// record. Similar to a ``ListField`` except it only occurs once.
 //// class Phone(Record):

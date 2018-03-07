@@ -35,13 +35,13 @@ void main() {
       expect(r.lastName.value, equals("Madison"));
     });
 
-    test('toRecord raises exception when longer than expected', () {
+    test('raises exception when longer than expected', () {
       expect(() {
         new TestRecord.fromRecord("Aaron     L    Madison   EXTRA_CHARACTERS");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
     });
 
-    test('toRecord raises exception when shorter than expected', () {
+    test('raises exception when shorter than expected', () {
       expect(() {
         new TestRecord.fromRecord("Aaron");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
