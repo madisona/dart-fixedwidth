@@ -37,8 +37,7 @@ void main() {
 
     test('toRecord raises exception when longer than expected', () {
       expect(() {
-        new TestRecord.fromRecord(
-            "Aaron     L    Madison   EXTRA_CHARACTERS");
+        new TestRecord.fromRecord("Aaron     L    Madison   EXTRA_CHARACTERS");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
     });
 
