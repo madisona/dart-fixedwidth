@@ -1,4 +1,3 @@
-class isInstance<T> {
-  bool check(a) => a is T;
-  Type get type => T;
+String floatPadding(int length, num val, {int fractionalDigits: 2}) {
+  return val.toStringAsFixed(fractionalDigits).padLeft(length, '0');
 }
