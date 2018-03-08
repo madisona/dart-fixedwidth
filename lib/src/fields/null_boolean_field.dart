@@ -10,12 +10,11 @@ class NullBooleanField extends BooleanField {
       : super(length: length, defaultValue: defaultValue);
 
   void set value(dynamic val) {
-    var stringified = val.toString();
-    if (stringified == "true" || stringified == "Y") {
-      rawVal = true;
-    } else if (stringified == "false" || stringified == "F") {
-      rawVal = false;
-    } else if (stringified.trim() == "") {
+    if (val is bool) {
+      rawVal = val;
+    } else if (val is String && ["Y", "N"].contains(val)) {
+      rawVal = val == "Y" ? true : false;
+    } else if ([null, "", " "].contains(val)) {
       rawVal = null;
     } else {
       throw new FieldValueException("'$value' is not valid.");
@@ -26,7 +25,7 @@ class NullBooleanField extends BooleanField {
     if (value == true) {
       return "Y";
     } else if (value == false) {
-      return "F";
+      return "N";
     } else if (value == null) {
       return " ";
     } else {

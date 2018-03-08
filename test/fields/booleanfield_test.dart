@@ -13,8 +13,8 @@ void main() {
       expect(field.value, equals(true));
     });
 
-    test('returns false when value is F', () {
-      var field = new BooleanField()..value = "F";
+    test('returns false when value is N', () {
+      var field = new BooleanField()..value = "N";
       expect(field.value, equals(false));
     });
 

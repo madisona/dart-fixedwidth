@@ -7,26 +7,19 @@ class BooleanField extends FixedWidthField {
       : super(length, defaultValue: defaultValue);
 
   void set value(dynamic val) {
-    var stringified = val.toString();
-    if (stringified == "true" || stringified == "Y") {
-      rawVal = true;
-    } else if (stringified == "false" ||
-        stringified == "F" ||
-        stringified == ' ' ||
-        stringified == '') {
-      rawVal = false;
+    if (val is bool) {
+      rawVal = val;
+    } else if (val is String && ["Y", "N", "", " "].contains(val)) {
+      rawVal = val == "Y" ? true : false;
     } else {
       throw new FieldValueException("'$value' is not valid.");
     }
   }
 
   String toString() {
-    if (value == true) {
-      return "Y";
-    } else if (value == false) {
-      return "F";
-    } else {
+    if (value is! bool) {
       throw new FieldValueException("'$value' is not valid. Must be Y/N.");
     }
+    return value == true ? "Y" : "N";
   }
 }
