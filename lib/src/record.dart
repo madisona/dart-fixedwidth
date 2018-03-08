@@ -1,7 +1,6 @@
 import 'dart:mirrors';
 import 'exceptions.dart' show FieldLengthException;
 import 'fields/fixedwidth_field.dart' show FixedWidthField;
-import 'utils.dart' show isInstance;
 
 /// The base class for a fixed width record definition.
 ///
@@ -58,13 +57,12 @@ abstract class Record {
       InstanceMirror im = reflect(this);
       ClassMirror cm = im.type;
 
-      var isFixedWidth = new isInstance<FixedWidthField>();
       var fieldList = [];
 
       for (var s in cm.declarations.keys) {
         try {
           var field = im.getField(s).reflectee;
-          if (isFixedWidth.check(field)) {
+          if (field is FixedWidthField) {
             fieldList.add(field);
           }
         } catch (NoSuchMethodError) {}
