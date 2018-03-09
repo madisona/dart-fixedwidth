@@ -2,7 +2,7 @@ import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
 class TestRecord extends Record {
-  StringField firstName = new StringField(10, "John");
+  StringField firstName = new StringField(10, defaultValue: "John");
   StringField middle = new StringField(5);
   StringField lastName = new StringField(10);
 
@@ -35,13 +35,13 @@ void main() {
       expect(r.lastName.value, equals("Madison"));
     });
 
-    test('toRecord raises exception when longer than expected', () {
+    test('raises exception when longer than expected', () {
       expect(() {
         new TestRecord.fromRecord("Aaron     L    Madison   EXTRA_CHARACTERS");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
     });
 
-    test('toRecord raises exception when shorter than expected', () {
+    test('raises exception when shorter than expected', () {
       expect(() {
         new TestRecord.fromRecord("Aaron");
       }, throwsA(new isInstanceOf<FieldLengthException>()));

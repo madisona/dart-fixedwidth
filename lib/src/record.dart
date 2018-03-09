@@ -1,30 +1,25 @@
+import 'dart:mirrors';
 import 'exceptions.dart' show FieldLengthException;
 import 'fields/fixedwidth_field.dart' show FixedWidthField;
-import 'dart:mirrors';
 
-class isInstance<T> {
-  bool check(a) => a is T;
-  Type get type => T;
-}
-
-/// The base class for a fixed with record definition.
+/// The base class for a fixed width record definition.
 ///
 /// The Record class is made up of a series of FixedWidthField objects
 /// which declare the length of the fixed width field and the type.
 ///
 ///     class AddressRecord extends Record {
-///       address = new StringField(length=50)
-///       address2 = new StringField(length=50)
-///       city = new StringField(length=20)
-///       state = new StringField(length=2)
-///       postal_code = new StringField(length=9)
+///       address = new StringField(length=50);
+///       address2 = new StringField(length=50);
+///       city = new StringField(length=20);
+///       state = new StringField(length=2);
+///       postal_code = new StringField(length=9);
 ///     }
 ///
 ///     var address = new AddressRecord()
 ///       ..address.value = "123 Main Street"
 ///       ..city.value = "Mountain View"
 ///       ..state.value = "CA"
-///       ..postal_code.value = "94043"
+///       ..postal_code.value = "94043";
 ///
 ///     Use `toString` to turn the object into its properly padded string:
 ///
@@ -62,13 +57,12 @@ abstract class Record {
       InstanceMirror im = reflect(this);
       ClassMirror cm = im.type;
 
-      var isFixedWidth = new isInstance<FixedWidthField>();
       var fieldList = [];
 
       for (var s in cm.declarations.keys) {
         try {
           var field = im.getField(s).reflectee;
-          if (isFixedWidth.check(field)) {
+          if (field is FixedWidthField) {
             fieldList.add(field);
           }
         } catch (NoSuchMethodError) {}

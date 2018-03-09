@@ -25,12 +25,12 @@ void main() {
     });
 
     test('toString returns padded length when value is null', () {
-      var field = new IntegerField(10, null);
+      var field = new IntegerField(10, defaultValue: null);
       expect(field.toString(), equals("0000000000"));
     });
 
     test('calling value returns null when null', () {
-      var field = new IntegerField(10, null);
+      var field = new IntegerField(10, defaultValue: null);
       expect(field.value, equals(null));
     });
 
@@ -48,12 +48,3 @@ void main() {
     });
   });
 }
-
-//def test_to_python_returns_none_when_value_is_empty_string(self):
-//field = fields.IntegerField(length=5)
-//self.assertEqual(None, field.to_python("     "))
-//
-//def test_to_python_raises_value_error_when_value_given_has_characters(self):
-//field = fields.IntegerField(length=5)
-//with self.assertRaises(ValueError):
-//self.assertEqual(None, field.to_python("0001A"))

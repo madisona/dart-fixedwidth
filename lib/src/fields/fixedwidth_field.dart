@@ -8,7 +8,7 @@ abstract class FixedWidthField {
   int length;
   dynamic rawVal;
 
-  FixedWidthField(this.length, [this.defaultValue]) {
+  FixedWidthField(this.length, {this.defaultValue}) {
     if (defaultValue != null) {
       rawVal = defaultValue;
     }
@@ -28,8 +28,4 @@ abstract class FixedWidthField {
 
     return value.padRight(length);
   }
-}
-
-class StringField extends FixedWidthField {
-  StringField(int length, [String defaultValue]) : super(length, defaultValue);
 }
