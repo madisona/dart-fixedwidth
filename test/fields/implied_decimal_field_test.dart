@@ -42,10 +42,17 @@ void main() {
       expect(field.toString(), equals("000000"));
     });
 
-    test('properly converts string formatted', () {
+    test('properly converts from string formatted', () {
       var field = new ImpliedDecimalField(10, decimals: 2);
-      field.value = "725.33";
+      field.value = "072533";
       expect(field.value, equals(725.33));
+      expect(field.toString(), equals("0000072533"));
+    });
+
+    test('properly converts from string formatted when no decimals', () {
+      var field = new ImpliedDecimalField(10, decimals: 0);
+      field.value = "0000072533";
+      expect(field.value, equals(72533));
       expect(field.toString(), equals("0000072533"));
     });
 

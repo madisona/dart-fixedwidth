@@ -12,10 +12,19 @@ class ImpliedDecimalField extends FixedWidthField {
       : super(length, defaultValue: defaultValue);
 
   void set value(dynamic val) {
-    try {
-      rawVal = num.parse(val.toString());
-    } catch (FormatException) {
-      throw new FieldValueException("'$val' is not valid input");
+    if (val is! String) {
+      rawVal = val;
+    } else {
+      // If we get a string we need to put the implied decimal back.
+      try {
+        var numberPart = val.substring(0, val.length - decimals);
+        var decimalPart = decimals > 0
+            ? val.substring(val.length - decimals, val.length)
+            : "0";
+        rawVal = num.parse("$numberPart.$decimalPart");
+      } catch (FormatException) {
+        throw new FieldValueException("'$val' is not valid input");
+      }
     }
   }
 
