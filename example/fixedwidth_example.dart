@@ -22,7 +22,7 @@ main() {
     ..num_siblings.value = 2
     ..amount_due.value = 24.75;
   print("'${record.toString()}'");
-  print("Total Record Length: ${record.length()}");
+  print("Total Record Length: ${record.length}");
 
   // You can take a fixed width string and turn it into the appropriate
   // dart object

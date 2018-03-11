@@ -24,7 +24,7 @@ void main() {
     test('Length returns the sum of all the field lengths', () {
       var r = new TestRecord();
 
-      expect(r.length(), equals(25));
+      expect(r.length, equals(25));
     });
 
     test('From record populates field values with parsed string', () {

@@ -39,7 +39,7 @@ abstract class Record {
    * Takes a fixed width string and populates the Record class
    */
   Record.fromString(String record) {
-    if (record.length != this.length()) {
+    if (record.length != this.length) {
       throw new FieldLengthException(
           "Fixed width record length is ${record.length} but should be ${this.length}");
     }
@@ -77,5 +77,5 @@ abstract class Record {
   String toString() => fields.map((e) => e.toString()).join("");
 
   /// Returns the total length of the defined Record
-  num length() => fields.fold(0, (prev, element) => prev + element.length);
+  num get length => fields.fold(0, (prev, element) => prev + element.length);
 }
