@@ -88,7 +88,6 @@ void main() {
       ..amount_due.value = 75.25
       ..is_active.value = true;
 
-
     expect(contact.toString(), equals(fixedWidthString));
   });
 
