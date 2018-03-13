@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.2.0 - WIP
+## 0.2.0
 - Added `ImpliedDecimalField`
 - Added `SignedImpliedDecimalField`
 - Added `RecordField`
+- Added `ListField`
 - Breaking Change: `Record.length` is now a getter, not a method
 
 ## 0.1.0
