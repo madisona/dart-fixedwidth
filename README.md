@@ -59,9 +59,12 @@ print(record2.num_siblings.value);
 print(record2.amount_due.value);
 }
 ```
+
+See the [examples][example_link] for additional usage samples.
     
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: https://github.com/madisona/dart-fixedwidth/issues
+[example_link]: https://github.com/madisona/dart-fixedwidth/blob/master/example/fixedwidth_example.dart
