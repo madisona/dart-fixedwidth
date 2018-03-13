@@ -2,7 +2,7 @@ import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('DecimalField tests', () {
+  group('ImpliedDecimalField tests', () {
     test('raises exception when value longer than allowed', () {
       var field = new ImpliedDecimalField(6);
       field.value = 150156.2;
