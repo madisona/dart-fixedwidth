@@ -16,40 +16,27 @@ class SignedImpliedDecimalField extends FixedWidthField {
       {num defaultValue, int this.decimals: 2})
       : super(length, defaultValue: defaultValue);
 
-  void set value(dynamic val) {
-    if (val is! String) {
-      rawVal = val;
-    } else {
-      // If we get a string we need to put the implied decimal back and
-      // move the sign from the back to the front before parsing.
-      try {
-        var sign = val.substring(val.length - 1, val.length);
-        var numberPart = val.substring(0, val.length - (decimals + 1));
-        var decimalPart = decimals > 0
-            ? val.substring(val.length - (decimals + 1), val.length - 1)
-            : "0";
-        rawVal = num.parse("$sign$numberPart.$decimalPart");
-      } catch (FormatException) {
-        throw new FieldValueException("'$val' is not valid input");
-      }
+  @override
+  num populateFromString(val) {
+    // If we get a string we need to put the implied decimal back and
+    // move the sign from the back to the front before parsing.
+    try {
+      var sign = val.substring(val.length - 1, val.length);
+      var numberPart = val.substring(0, val.length - (decimals + 1));
+      var decimalPart = decimals > 0
+          ? val.substring(val.length - (decimals + 1), val.length - 1)
+          : "0";
+      return num.parse("$sign$numberPart.$decimalPart");
+    } catch (FormatException) {
+      throw new FieldValueException("'$val' is not valid input");
     }
   }
 
-  String toString() {
-    var val = value;
-    if (val == null) {
-      val = 0;
-    }
-
-    var stringVal = impliedDecimalPadding(length - 1, val.abs(),
+  @override
+  String toRecord(val) {
+    var stringVal = impliedDecimalPadding(length - 1, (val ?? 0).abs(),
         fractionalDigits: decimals);
     var sign = val >= 0 ? "+" : "-";
-    stringVal = stringVal + sign;
-
-    if (stringVal.length > length) {
-      throw new FieldLengthException(
-          "Value '$val' is longer than {$length} chars.");
-    }
-    return stringVal;
+    return stringVal + sign;
   }
 }

@@ -17,24 +17,21 @@ class DateTimeField extends FixedWidthField {
 
   /// Tries to parse the datetime input if necessary.
   /// See the `DateTime.parse` documentation for accepted formats.
-  void set value(dynamic val) {
-    if (val is String) {
-      try {
-        rawVal = val.trim() != "" ? DateTime.parse(val) : null;
-      } catch (FormatException) {
-        throw new FieldValueException("'$val' is not valid input");
-      }
-    } else {
-      rawVal = val;
+  @override
+  DateTime populateFromString(val) {
+    try {
+      return val.trim() != "" ? DateTime.parse(val) : null;
+    } catch (FormatException) {
+      throw new FieldValueException("'$val' is not valid input");
     }
   }
 
-  String toString() {
+  @override
+  String toRecord(val) {
     if (value == null || (value is String && value.trim() == "")) {
       return " " * length;
     }
     var val = _format.format(value);
-    assert(val.length == length);
     return val;
   }
 }

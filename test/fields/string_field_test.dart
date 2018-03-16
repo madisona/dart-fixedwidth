@@ -7,7 +7,7 @@ void main() {
       var field = new StringField(3);
       field.value = "This is longer than allowed";
 
-      var expectedMessage = "Value '${field.value}' is longer than 3 chars.";
+      var expectedMessage = "Value '${field.value}' is ${field.value.length} chars. Expecting 3 chars.";
       expect(
           () => field.toString(),
           throwsA(predicate((e) =>

@@ -41,7 +41,8 @@ class ListField extends FixedWidthField {
     cls_mirror = reflectClass(record_class);
   }
 
-  List _getRecordsFromString(String val) {
+  @override
+  List populateFromString(String val) {
     if (val.length != length) {
       throw new FieldLengthException(
           "Value is ${val.length} characters, but must be $length}");
@@ -57,27 +58,23 @@ class ListField extends FixedWidthField {
     return records;
   }
 
-  /// value is a list of Records.
-  void set value(dynamic val) {
-    if (val is String) {
-      rawVal = _getRecordsFromString(val);
-    } else {
-      if (val.length != occurs) {
-        throw new FieldLengthException(
-            "Must set the same number of records as `occurs` ($occurs)");
-      }
-      val.forEach((var v) {
-        assert(v.runtimeType == cls_mirror.reflectedType);
-      });
-      rawVal = val;
+  @override
+  List populateFromObj(val) {
+    if (val.length != occurs) {
+      throw new FieldLengthException(
+          "Must set the same number of records as `occurs` ($occurs)");
     }
+    val.forEach((var v) {
+      assert(v.runtimeType == cls_mirror.reflectedType);
+    });
+    return val;
   }
 
-  String toString() {
-    if (rawVal == null) {
-      return _getEmptyRecord().toString() * occurs;
-    }
-    return rawVal.map((v) => v.toString()).join("");
+  @override
+  String toRecord(val) {
+    return rawVal == null
+        ? _getEmptyRecord().toString() * occurs
+        : rawVal.map((v) => v.toString()).join("");
   }
 
   int get length => singleRecordLength * occurs;

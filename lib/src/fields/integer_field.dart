@@ -5,23 +5,15 @@ class IntegerField extends FixedWidthField {
   IntegerField(int length, {int defaultValue})
       : super(length, defaultValue: defaultValue);
 
-  void set value(dynamic val) {
+  @override
+  int populateFromString(val) {
     try {
-      rawVal = int.parse(val.toString());
+      return int.parse(val.toString());
     } catch (FormatException) {
       throw new FieldValueException("'$val' is not valid input");
     }
   }
 
-  String toString() {
-    var val = value;
-    if (val == null) {
-      val = 0;
-    }
-    if (val.toString().length > length) {
-      throw new FieldLengthException(
-          "Value '$val' is longer than {$length} chars.");
-    }
-    return val.toString().padLeft(length, "0");
-  }
+  @override
+  String toRecord(val) => (val ?? 0).toString().padLeft(length, "0");
 }

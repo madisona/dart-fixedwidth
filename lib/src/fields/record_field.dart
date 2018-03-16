@@ -39,22 +39,19 @@ class RecordField extends FixedWidthField {
     cls_mirror = reflectClass(record_class);
   }
 
-  void set value(dynamic val) {
-    if (val is String) {
-      rawVal =
-          cls_mirror.newInstance(new Symbol('fromRecord'), [val]).reflectee;
-    } else {
-      assert(val.runtimeType == cls_mirror.reflectedType);
-      rawVal = val;
-    }
+  @override
+  populateFromString(val) =>
+      cls_mirror.newInstance(new Symbol('fromRecord'), [val]).reflectee;
+
+  @override
+  populateFromObj(val) {
+    assert(val.runtimeType == cls_mirror.reflectedType);
+    return val;
   }
 
-  String toString() {
-    if (rawVal == null) {
-      return _getEmptyRecord().toString();
-    }
-    return rawVal.toString();
-  }
+  @override
+  String toRecord(val) =>
+      rawVal == null ? _getEmptyRecord().toString() : rawVal.toString();
 
   int get length {
     return rawVal != null ? rawVal.length : _getEmptyRecord().length;

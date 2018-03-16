@@ -40,13 +40,18 @@ abstract class FixedWidthField {
 
   dynamic get value => rawVal;
 
+  populateFromString(String val) => val.trimRight();
+  populateFromObj(dynamic val) => val;
+
   /// Each subclass will define their own implementation
   /// Set value's job is to set rawVal equal to the appropriate
   /// "dart typed" object. I.E. a string / int / bool / etc...
   ///
   /// Values may either be set directly by assigning the typed object
   /// or it may be coming from a fixed width string and need to be converted.
-  void set value(dynamic val) => rawVal = val.trimRight();
+  void set value(dynamic val) {
+    rawVal = val is String ? populateFromString(val) : populateFromObj(val);
+  }
 
   /// `toRecord` will be overridden in each subclass
   ///
@@ -65,9 +70,9 @@ abstract class FixedWidthField {
   }
 
   void _checkRecordLength(String val) {
-    if (val.length > length) {
+    if (val.length != length) {
       throw new FieldLengthException(
-          "Value '$val' is longer than $length chars.");
+          "Value '$val' is ${val.length} chars. Expecting $length chars.");
     }
   }
 }
