@@ -31,6 +31,7 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 ///     var address = new AddressRecord.fromString(
 ///
 abstract class Record {
+  bool autoTruncate = false;
   Iterable<dynamic> _fieldsList;
 
   Record();
@@ -62,6 +63,7 @@ abstract class Record {
       for (var s in cm.declarations.keys) {
         try {
           var field = im.getField(s).reflectee;
+          field.autoTruncate = autoTruncate;
           if (field is FixedWidthField) {
             fieldList.add(field);
           }
