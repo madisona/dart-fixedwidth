@@ -9,28 +9,28 @@ class NullBooleanField extends BooleanField {
   NullBooleanField({int length = 1, bool defaultValue})
       : super(length: length, defaultValue: defaultValue);
 
-  void set value(dynamic val) {
-    if (val is bool) {
-      rawVal = val;
-    } else if (val is String && ["Y", "N"].contains(val)) {
-      rawVal = val == "Y" ? true : false;
+  @override
+  bool populateFromString(val) {
+    if (val is String && ["Y", "N"].contains(val)) {
+      return val == "Y" ? true : false;
     } else if ([null, "", " "].contains(val)) {
-      rawVal = null;
+      return null;
     } else {
       throw new FieldValueException("'$value' is not valid.");
     }
   }
 
-  String toString() {
-    if (value == true) {
+  @override
+  String toRecord(val) {
+    if (val == true) {
       return "Y";
-    } else if (value == false) {
+    } else if (val == false) {
       return "N";
-    } else if (value == null) {
+    } else if (val == null) {
       return " ";
     } else {
       throw new FieldValueException(
-          "'$value' is not valid. Must be Y/N or null.");
+          "'$val' is not valid. Must be Y/N or null.");
     }
   }
 }

@@ -11,36 +11,20 @@ class ImpliedDecimalField extends FixedWidthField {
   ImpliedDecimalField(int length, {num defaultValue, int this.decimals: 2})
       : super(length, defaultValue: defaultValue);
 
-  void set value(dynamic val) {
-    if (val is! String) {
-      rawVal = val;
-    } else {
-      // If we get a string we need to put the implied decimal back.
-      try {
-        var numberPart = val.substring(0, val.length - decimals);
-        var decimalPart = decimals > 0
-            ? val.substring(val.length - decimals, val.length)
-            : "0";
-        rawVal = num.parse("$numberPart.$decimalPart");
-      } catch (FormatException) {
-        throw new FieldValueException("'$val' is not valid input");
-      }
+  @override
+  num populateFromString(dynamic val) {
+    // If we get a string we need to put the implied decimal back.
+    try {
+      var numberPart = val.substring(0, val.length - decimals);
+      var decimalPart =
+          decimals > 0 ? val.substring(val.length - decimals, val.length) : "0";
+      return num.parse("$numberPart.$decimalPart");
+    } catch (FormatException) {
+      throw new FieldValueException("'$val' is not valid input");
     }
   }
 
-  String toString() {
-    var val = value;
-    if (val == null) {
-      val = 0;
-    }
-
-    var stringVal =
-        impliedDecimalPadding(length, val, fractionalDigits: decimals);
-
-    if (stringVal.length > length) {
-      throw new FieldLengthException(
-          "Value '$val' is longer than {$length} chars.");
-    }
-    return stringVal;
-  }
+  @override
+  String toRecord(val) =>
+      impliedDecimalPadding(length, val ?? 0, fractionalDigits: decimals);
 }

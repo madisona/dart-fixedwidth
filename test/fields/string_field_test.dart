@@ -7,7 +7,20 @@ void main() {
       var field = new StringField(3);
       field.value = "This is longer than allowed";
 
-      expect(field.toString, throwsA(new isInstanceOf<FieldLengthException>()));
+      var expectedMessage =
+          "Value '${field.value}' is ${field.value.length} chars. Expecting 3 chars.";
+      expect(
+          () => field.toString(),
+          throwsA(predicate((e) =>
+              e is FieldLengthException && e.message == expectedMessage)));
+    });
+
+    test('toString returns truncated string', () {
+      var field = new StringField(10, defaultValue: null);
+      field.autoTruncate = true;
+      field.value = "This is way too long for the field";
+
+      expect(field.toString(), equals("This is wa"));
     });
 
     test('toString returns padded length', () {
@@ -19,6 +32,12 @@ void main() {
     test('toString returns padded length when value is null', () {
       var field = new StringField(10, defaultValue: null);
       expect(field.toString(), equals("          "));
+    });
+
+    test('can set default', () {
+      var field = new StringField(10, defaultValue: "Peter");
+      expect(field.value, equals("Peter"));
+      expect(field.toString(), equals("Peter     "));
     });
   });
 }

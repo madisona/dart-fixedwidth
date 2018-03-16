@@ -60,6 +60,208 @@ print(record2.amount_due.value);
 }
 ```
 
+### Field Types:
+
+##### `StringField`
+This is the most common field. Just a string, padded to the right.
+
+```dart
+StringField name = new StringField(15);
+```
+
+String Representation: right padded to the given `length` i.e.: "Peter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
+
+Dart Value: the raw string assigned ie. "Peter"
+
+##### `DateTimeField`
+`DateTimeField` is for dates or timestamps. You can set desired output 
+format on the field to control the string output. 
+
+Uses the `intl` library for date formatting.
+
+```dart
+DateTimeField completedDate = new DateTimeField(10, format: new DateFormat("yyyy-MM-dd");
+```
+
+String Representation: Formatted date as defined by `format`. i.e. `2018-03-16`
+
+Dart Value: `DateTime` - `2018-03-16 14:53:02.030`
+
+
+##### `IntegerField`
+
+```dart
+IntegerField amount = new IntegerField(5);
+```
+
+String Representation: zero padded integer: `00300`
+
+Dart Value: `int` - `300`
+
+
+##### `DecimalField`
+A `num` type that outputs the desired length w/ decimals.
+Value will be rounded if necessary to shorten decimal precision.
+
+```dart
+DecimalField amount = new DecimalField(8, decimals: 2);
+```
+
+String Representation: zero padded decimal: `00300.50`
+
+Dart Value: `num` - `300.50`
+
+##### `ImpliedDecimalField`
+With COBOL programs it used to be common to have `implied decimals`
+which means a decimal is implied at a certain spot, but not present.
+
+```dart
+ImpliedDecimalField amount = new ImpliedDecimalField(7, decimals: 2);
+```
+
+String Representation: zero padded decimal: `0030075`
+
+Dart Value: `num` - `300.75`
+
+
+##### `SignedImpliedDecimalField`
+Same thing as Implied Decimal Field, but has a trailing sign that indicates
+whether the value is positive or negative.
+
+If you'd like a signed integer field, just set decimals to `0`
+
+```dart
+SignedImpliedDecimalField amount = new SignedImpliedDecimalField(8, decimals: 2);
+```
+
+String Representation: : `0030075-`
+
+Dart Value: `num` - `-300.75`
+
+
+##### `BooleanField`
+
+```dart
+BooleanField isActive = new BooleanField();
+```
+
+String Representation: `Y` or `N`
+
+Dart Value: `bool`
+
+##### `NullBooleanField`
+Like a `BooleanField`, but can also be `null`. This is
+sometimes used when a value is unset or unknown.
+
+```dart
+NullBooleanField likesPizza = new NullBooleanField();
+```
+
+String Representation: `Y`, `N`, or ` `
+
+Dart Value: `bool`
+
+##### `RecordField`
+`RecordField` can be thought of as a "sub-record", or a "record within a record".
+i.e. Sometimes parts of a record (like an address) are repeated in multiple places 
+ and it is less work to define the "sub-record" only once.
+ 
+```dart
+class AddressRecord extends Record {
+    StringField address = new StringField(60);
+    StringField city = new StringField(30);
+    StringField state = new StringField(2);
+    StringField postalCode = new StringField(12);
+
+    AddressRecord();
+    AddressRecord.fromRecord(String record) : super.fromString(record);
+}
+
+class Transaction extends Record {
+    RecordField billingAddress = new RecordField(record: AddressRecord);
+    RecordField shippingAddress = new RecordField(record: AddressRecord);
+    
+    Transaction();
+    Transaction.fromRecord(String record) : super.fromString(record);
+}
+```  
+
+String Representation: the entire padded string of the declared `record`
+
+Dart Value: an instance of the declared `Record`
+
+
+##### `ListField`
+
+`ListField` is like a `RecordField`, but it is a list of records.
+Very similar to COBOL `occurs` functionality.
+
+ 
+```dart
+class ItemRecord extends Record {
+    StringField sku = new StringField(10);
+    IntegerField qty = new IntegerField(2);
+    DecimalField amount = new StringField(9, decimals: 2);
+
+    ItemRecord();
+    ItemRecord.fromRecord(String record) : super.fromString(record);
+}
+
+class Transaction extends Record {
+    ListField orderItems = new ListField(record: ItemRecord, occurs: 25);
+    
+    Transaction();
+    Transaction.fromRecord(String record) : super.fromString(record);
+}
+```  
+
+String Representation: the entire padded string of the list of declared `record`s
+
+Dart Value: List of `Record` instances
+
+### Other Features
+
+##### `defaultValue`
+each field type accepts a `defaultValue` parameter. A field's value is initially
+set to the default value when it is instantiated.
+
+```dart
+StringField name = new StringField(10, defaultValue: "Peter");
+print("'${name.value}'");
+print("'${name.toString()}'");
+```
+prints 
+```dart
+'Peter'
+'Peter     '
+```
+
+##### `autoTruncate`
+set `autoTruncate = true` If you want to automatically truncate the string 
+value to fit the necessary fixed width length (instead of throwing an exception), 
+
+This is useful when you store data in fields longer than what the fixed width
+file layout requirement is. 
+
+```dart
+class MyRecord extends Record {
+    bool autoTruncate = true;
+    
+    StringField description = new StringField(10);
+}
+
+var record = new MyRecord()
+  ..description.value = "Pigeons are super cool";
+print("'${record.description.value}'");
+print("'${record.toString()}'");
+```
+prints 
+```dart
+'Pigeons are super cool'
+'Pigeons ar'
+```
+
+
 See the [examples][example_link] for additional usage samples.
     
 ## Features and bugs

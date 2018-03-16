@@ -87,11 +87,16 @@ void main() {
     });
 
     test('toString output must match field length specified', () {
-      var field = new DateTimeField(19, format: new DateFormat("yyyyMMdd"));
+      var dateFormat = new DateFormat("yyyyMMdd");
+      var field = new DateTimeField(19, format: dateFormat);
       field.value = new DateTime.now();
-      expect(() {
-        field.toString();
-      }, throwsA(new isInstanceOf<AssertionError>()));
+
+      var expectedMessage =
+          "Value '${dateFormat.format(field.value)}' is 8 chars. Expecting 19 chars.";
+      expect(
+          () => field.toString(),
+          throwsA(predicate((e) =>
+              e is FieldLengthException && e.message == expectedMessage)));
     });
   });
 }
