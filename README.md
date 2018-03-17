@@ -58,10 +58,9 @@ print(record2.last_name);
 print(record2.dob.value);
 print(record2.num_siblings.value);
 print(record2.amount_due.value);
-}
 ```
 
-### Field Types:
+## Field Types:
 
 ##### StringField
 This is the most common field. Just a string, padded to the right.
@@ -146,7 +145,7 @@ Dart Value: `num` - `-300.75`
 BooleanField isActive = new BooleanField();
 ```
 
-String Representation: `Y` or `N`
+String Representation: `'Y'` or `'N'`
 
 Dart Value: `bool`
 
@@ -158,7 +157,7 @@ sometimes used when a value is unset or unknown.
 NullBooleanField likesPizza = new NullBooleanField();
 ```
 
-String Representation: `Y`, `N`, or ` `
+String Representation: `'Y'`, `'N'`, or `' '`
 
 Dart Value: `bool`
 
