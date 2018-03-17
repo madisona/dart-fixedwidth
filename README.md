@@ -1,4 +1,5 @@
 # fixedwidth
+[![Build Status](https://travis-ci.org/madisona/dart-fixedwidth.svg?branch=master)](https://travis-ci.org/madisona/dart-fixedwidth)
 
 A library for working with fixed width files in dart.
 
