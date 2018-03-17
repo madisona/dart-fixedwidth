@@ -8,7 +8,6 @@ export 'src/fields/integer_field.dart';
 export 'src/fields/implied_decimal_field.dart';
 export 'src/fields/list_field.dart';
 export 'src/fields/null_boolean_field.dart';
-export 'src/fields/record_field.dart';
 export 'src/fields/signed_implied_decimal_field.dart';
 export 'src/fields/string_field.dart';
 export 'src/record.dart';

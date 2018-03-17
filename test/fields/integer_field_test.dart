@@ -6,7 +6,7 @@ class IntRecordSample extends Record {
   IntegerField txn_amount = new IntegerField(5);
 
   IntRecordSample() : super();
-  IntRecordSample.fromRecord(String record) : super.fromString(record);
+  IntRecordSample.fromString(String record) : super.fromString(record);
 }
 
 void main() {
@@ -34,8 +34,8 @@ void main() {
       expect(field.value, equals(null));
     });
 
-    test('fromRecord coerces value to int', () {
-      var record = new IntRecordSample.fromRecord("01500950");
+    test('fromString coerces value to int', () {
+      var record = new IntRecordSample.fromString("01500950");
 
       expect(record.account.value, equals(15));
       expect(record.txn_amount.value, equals(950));
@@ -43,7 +43,7 @@ void main() {
 
     test('raises exception when bad input', () {
       expect(() {
-        new IntRecordSample.fromRecord("015A0950");
+        new IntRecordSample.fromString("015A0950");
       }, throwsA(new isInstanceOf<FieldValueException>()));
     });
   });

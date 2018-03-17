@@ -40,6 +40,10 @@ abstract class Record {
    * Takes a fixed width string and populates the Record class
    */
   Record.fromString(String record) {
+    populateFromString(record);
+  }
+
+  void populateFromString(String record) {
     if (record.length != this.length) {
       throw new FieldLengthException(
           "Fixed width record length is ${record.length} but should be ${this.length}");
@@ -47,7 +51,12 @@ abstract class Record {
 
     var pos = 0;
     for (var field in fields) {
-      field.value = record.substring(pos, pos + field.length);
+      if (field is Record) {
+        field.populateFromString(record.substring(pos, pos + field.length));
+      } else {
+        field.value = record.substring(pos, pos + field.length);
+      }
+
       pos += field.length;
     }
   }
@@ -64,7 +73,7 @@ abstract class Record {
         try {
           var field = im.getField(s).reflectee;
           field.autoTruncate = autoTruncate;
-          if (field is FixedWidthField) {
+          if (field is FixedWidthField || field is Record) {
             fieldList.add(field);
           }
         } catch (NoSuchMethodError) {}

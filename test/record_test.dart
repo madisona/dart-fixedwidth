@@ -7,7 +7,7 @@ class TestRecord extends Record {
   StringField lastName = new StringField(10);
 
   TestRecord() : super();
-  TestRecord.fromRecord(String record) : super.fromString(record);
+  TestRecord.fromString(String record) : super.fromString(record);
 }
 
 void main() {
@@ -28,7 +28,7 @@ void main() {
     });
 
     test('From record populates field values with parsed string', () {
-      var r = new TestRecord.fromRecord("Aaron     L    Madison   ");
+      var r = new TestRecord.fromString("Aaron     L    Madison   ");
 
       expect(r.firstName.value, equals("Aaron"));
       expect(r.middle.value, equals("L"));
@@ -37,13 +37,13 @@ void main() {
 
     test('raises exception when longer than expected', () {
       expect(() {
-        new TestRecord.fromRecord("Aaron     L    Madison   EXTRA_CHARACTERS");
+        new TestRecord.fromString("Aaron     L    Madison   EXTRA_CHARACTERS");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
     });
 
     test('raises exception when shorter than expected', () {
       expect(() {
-        new TestRecord.fromRecord("Aaron");
+        new TestRecord.fromString("Aaron");
       }, throwsA(new isInstanceOf<FieldLengthException>()));
     });
   });
