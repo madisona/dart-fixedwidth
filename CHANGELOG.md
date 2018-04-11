@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1
+- Changed pubspec sdk constraint to allow Dart 2
+
 ## 0.3.0
 - Added `autoTruncate` feature
   
