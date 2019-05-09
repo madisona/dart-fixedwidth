@@ -21,7 +21,7 @@ import 'fixedwidth_field.dart';
 ///     IntegerField line_number = new IntegerField(4);
 ///
 ///     PhoneNumber();
-///     PhoneNumber.fromRecord(String record) : super.fromString(record);
+///     PhoneNumber.fromString(String record) : super.fromString(record);
 ///   }
 ///
 ///   class Contact extends Record {
@@ -30,7 +30,7 @@ import 'fixedwidth_field.dart';
 ///     StringField email = new StringField(100);
 ///
 ///     Contact();
-///     Contact.fromRecord(String record) : super.fromString(record);
+///     Contact.fromString(String record) : super.fromString(record);
 ///   }
 ///
 class ListField extends FixedWidthField {
@@ -52,7 +52,7 @@ class ListField extends FixedWidthField {
     var recordLength = singleRecordLength;
     for (var i = 0; i < occurs; i++) {
       records.add(_getEmptyRecord(
-          'fromRecord', [val.substring(0, singleRecordLength)]));
+          'fromString', [val.substring(0, singleRecordLength)]));
       val = val.substring(recordLength, val.length);
     }
     return records;

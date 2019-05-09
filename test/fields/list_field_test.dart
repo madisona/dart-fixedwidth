@@ -6,17 +6,17 @@ class SimpleRecord extends Record {
   IntegerField intField = new IntegerField(5);
 
   SimpleRecord() : super();
-  SimpleRecord.fromRecord(String record) : super.fromString(record);
+  SimpleRecord.fromString(String record) : super.fromString(record);
 }
 
 class RecordTwo extends Record {
   StringField first_name = new StringField(10);
   StringField last_name = new StringField(10);
-  RecordField address = new RecordField(SimpleRecord);
+  SimpleRecord address = new SimpleRecord();
   IntegerField age = new IntegerField(3);
 
   RecordTwo() : super();
-  RecordTwo.fromRecord(String record) : super.fromString(record);
+  RecordTwo.fromString(String record) : super.fromString(record);
 }
 
 void main() {

@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.4.0
+- Simplified nested records. Removed `RecordField`. 
+  Now you can just place a nested record straight on the parent
+  
+```dart
+class AddressRecord extends Record {
+    StringField address = new StringField(60);
+    StringField city = new StringField(30);
+    StringField state = new StringField(2);
+    StringField postalCode = new StringField(12);
+
+    AddressRecord();
+    AddressRecord.fromString(String record) : super.fromString(record);
+}
+
+class Transaction extends Record {
+    AddressRecord billingAddress = new AddressRecord();
+    AddressRecord shippingAddress = new AddressRecord();
+    
+    Transaction();
+    Transaction.fromString(String record) : super.fromString(record);
+}
+var txn = new Transaction()
+  ..billingAddress.address.value = "PO Box 255"
+  ..billingAddress.city.value = "Des Moines"
+  ..billingAddress.state.value = "IA"
+  ..billingAddress.state.value = "50306"
+  ..shippingAddress.address.value = "123 1st St"
+  ..shippingAddress.city.value = "West Des Moines"
+  ..shippingAddress.state.value = "IA"
+  ..shippingAddress.state.value = "50266";
+``` 
+
 ## 0.3.1
 - Changed pubspec sdk constraint to allow Dart 2
 
