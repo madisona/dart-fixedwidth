@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## 0.4.0
 - Simplified nested records. Removed `RecordField`. 
   Now you can just place a nested record straight on the parent
@@ -34,6 +33,8 @@ var txn = new Transaction()
   ..shippingAddress.state.value = "50266";
 ``` 
 
+## 0.3.1
+- Changed pubspec sdk constraint to allow Dart 2
 
 ## 0.3.0
 - Added `autoTruncate` feature
