@@ -16,18 +16,18 @@ import 'fixedwidth_field.dart';
 ///   // Phone Number is used within the contact record
 ///
 ///   class PhoneNumber extends Record {
-///     IntegerField area_code = new IntegerField(3);
-///     IntegerField prefix = new IntegerField(3);
-///     IntegerField line_number = new IntegerField(4);
+///     IntegerField area_code = IntegerField(3);
+///     IntegerField prefix = IntegerField(3);
+///     IntegerField line_number = IntegerField(4);
 ///
 ///     PhoneNumber();
 ///     PhoneNumber.fromString(String record) : super.fromString(record);
 ///   }
 ///
 ///   class Contact extends Record {
-///     StringField name = new StringField(100);
-///     ListField phone_number = new ListField(PhoneNumber, occurs: 3);
-///     StringField email = new StringField(100);
+///     StringField name = StringField(100);
+///     ListField phone_number = ListField(PhoneNumber, occurs: 3);
+///     StringField email = StringField(100);
 ///
 ///     Contact();
 ///     Contact.fromString(String record) : super.fromString(record);
@@ -44,7 +44,7 @@ class ListField extends FixedWidthField {
   @override
   List populateFromString(String val) {
     if (val.length != length) {
-      throw new FieldLengthException(
+      throw FieldLengthException(
           "Value is ${val.length} characters, but must be $length}");
     }
 
@@ -61,7 +61,7 @@ class ListField extends FixedWidthField {
   @override
   List populateFromObj(val) {
     if (val.length != occurs) {
-      throw new FieldLengthException(
+      throw FieldLengthException(
           "Must set the same number of records as `occurs` ($occurs)");
     }
     val.forEach((var v) {
@@ -82,6 +82,6 @@ class ListField extends FixedWidthField {
   int get singleRecordLength => _getEmptyRecord().length;
 
   dynamic _getEmptyRecord([String symbolName = '', List args]) => cls_mirror
-      .newInstance(new Symbol(symbolName), args == null ? [] : args)
+      .newInstance(Symbol(symbolName), args == null ? [] : args)
       .reflectee;
 }

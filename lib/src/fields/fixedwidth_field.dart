@@ -24,7 +24,7 @@ import '../exceptions.dart' show FieldLengthException;
 ///       class AddressRecord extends Record {
 ///           autoTruncate = true;
 ///
-///           StringField address = new StringField(50);
+///           StringField address = StringField(50);
 ///       }
 ///
 abstract class FixedWidthField {
@@ -71,7 +71,7 @@ abstract class FixedWidthField {
 
   void _checkRecordLength(String val) {
     if (val.length != length) {
-      throw new FieldLengthException(
+      throw FieldLengthException(
           "Value '$val' is ${val.length} chars. Expecting $length chars.");
     }
   }

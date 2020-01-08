@@ -16,7 +16,7 @@ class NullBooleanField extends BooleanField {
     } else if ([null, "", " "].contains(val)) {
       return null;
     } else {
-      throw new FieldValueException("'$value' is not valid.");
+      throw FieldValueException("'$value' is not valid.");
     }
   }
 
@@ -29,8 +29,7 @@ class NullBooleanField extends BooleanField {
     } else if (val == null) {
       return " ";
     } else {
-      throw new FieldValueException(
-          "'$val' is not valid. Must be Y/N or null.");
+      throw FieldValueException("'$val' is not valid. Must be Y/N or null.");
     }
   }
 }

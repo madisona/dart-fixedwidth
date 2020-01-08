@@ -21,12 +21,12 @@ import 'package:intl/intl.dart';
 import 'package:fixedwidth/fixedwidth.dart';
 
 class PersonRecord extends Record {
-  StringField first_name = new StringField(20);
-  StringField last_name = new StringField(20);
+  StringField first_name = StringField(20);
+  StringField last_name = StringField(20);
   DateTimeField dob =
-      new DateTimeField(10, format: new DateFormat("yyyy-MM-dd"));
-  IntegerField num_siblings = new IntegerField(2, defaultValue: 0);
-  DecimalField amount_due = new DecimalField(8, decimals: 2);
+      DateTimeField(10, format: DateFormat("yyyy-MM-dd"));
+  IntegerField num_siblings = IntegerField(2, defaultValue: 0);
+  DecimalField amount_due = DecimalField(8, decimals: 2);
 
   PersonRecord();
   PersonRecord.fromString(String record) : super.fromString(record);
@@ -36,10 +36,10 @@ class PersonRecord extends Record {
 You can take a Record, populate it, and turn it to a fixed width string.
 
 ```dart
-var record = new PersonRecord()
+var record = PersonRecord()
   ..first_name.value = "John"
   ..last_name.value = "Doe"
-  ..dob.value = new DateTime(1980, 4, 16)
+  ..dob.value = DateTime(1980, 4, 16)
   ..num_siblings.value = 2
   ..amount_due.value = 24.75;
 print(record.toString());
@@ -51,7 +51,7 @@ You can also take a fixed width string and turn it into the appropriate
 dart object. Calling a field's `value` gives you the dart typed object.
 
 ```dart
-var record2 = new PersonRecord.fromString(
+var record2 = PersonRecord.fromString(
   "Benjamin            Franklin            1706-01-171600003.00");
 print(record2.first_name);
 print(record2.last_name);
@@ -66,7 +66,7 @@ print(record2.amount_due.value);
 This is the most common field. Just a string, padded to the right.
 
 ```dart
-StringField name = new StringField(15);
+StringField name = StringField(15);
 ```
 
 String Representation: right padded to the given `length` i.e.: "Peter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
@@ -80,7 +80,7 @@ format on the field to control the string output.
 Uses the `intl` library for date formatting.
 
 ```dart
-DateTimeField completedDate = new DateTimeField(10, format: new DateFormat("yyyy-MM-dd");
+DateTimeField completedDate = DateTimeField(10, format: DateFormat("yyyy-MM-dd"));
 ```
 
 String Representation: Formatted date as defined by `format`. i.e. `2018-03-16`
@@ -91,7 +91,7 @@ Dart Value: `DateTime` - `2018-03-16 14:53:02.030`
 ##### IntegerField
 
 ```dart
-IntegerField amount = new IntegerField(5);
+IntegerField amount = IntegerField(5);
 ```
 
 String Representation: zero padded integer: `00300`
@@ -104,7 +104,7 @@ A `num` type that outputs the desired length w/ decimals.
 Value will be rounded if necessary to shorten decimal precision.
 
 ```dart
-DecimalField amount = new DecimalField(8, decimals: 2);
+DecimalField amount = DecimalField(8, decimals: 2);
 ```
 
 String Representation: zero padded decimal: `00300.50`
@@ -116,7 +116,7 @@ With COBOL programs it used to be common to have `implied decimals`
 which means a decimal is implied at a certain spot, but not present.
 
 ```dart
-ImpliedDecimalField amount = new ImpliedDecimalField(7, decimals: 2);
+ImpliedDecimalField amount = ImpliedDecimalField(7, decimals: 2);
 ```
 
 String Representation: zero padded decimal: `0030075`
@@ -131,7 +131,7 @@ whether the value is positive or negative.
 If you'd like a signed integer field, just set decimals to `0`
 
 ```dart
-SignedImpliedDecimalField amount = new SignedImpliedDecimalField(8, decimals: 2);
+SignedImpliedDecimalField amount = SignedImpliedDecimalField(8, decimals: 2);
 ```
 
 String Representation: : `0030075-`
@@ -142,7 +142,7 @@ Dart Value: `num` - `-300.75`
 ##### BooleanField
 
 ```dart
-BooleanField isActive = new BooleanField();
+BooleanField isActive = BooleanField();
 ```
 
 String Representation: `'Y'` or `'N'`
@@ -154,7 +154,7 @@ Like a `BooleanField`, but can also be `null`. This is
 sometimes used when a value is unset or unknown.
 
 ```dart
-NullBooleanField likesPizza = new NullBooleanField();
+NullBooleanField likesPizza = NullBooleanField();
 ```
 
 String Representation: `'Y'`, `'N'`, or `' '`
@@ -170,16 +170,16 @@ Very similar to COBOL `occurs` functionality.
  
 ```dart
 class ItemRecord extends Record {
-    StringField sku = new StringField(10);
-    IntegerField qty = new IntegerField(2);
-    DecimalField amount = new StringField(9, decimals: 2);
+    StringField sku = StringField(10);
+    IntegerField qty = IntegerField(2);
+    DecimalField amount = StringField(9, decimals: 2);
 
     ItemRecord();
     ItemRecord.fromString(String record) : super.fromString(record);
 }
 
 class Transaction extends Record {
-    ListField orderItems = new ListField(record: ItemRecord, occurs: 25);
+    ListField orderItems = ListField(record: ItemRecord, occurs: 25);
     
     Transaction();
     Transaction.fromString(String record) : super.fromString(record);
@@ -197,7 +197,7 @@ each field type accepts a `defaultValue` parameter. A field's value is initially
 set to the default value when it is instantiated.
 
 ```dart
-StringField name = new StringField(10, defaultValue: "Peter");
+StringField name = StringField(10, defaultValue: "Peter");
 print("'${name.value}'");
 print("'${name.toString()}'");
 ```
@@ -218,10 +218,10 @@ file layout requirement is.
 class MyRecord extends Record {
     bool autoTruncate = true;
     
-    StringField description = new StringField(10);
+    StringField description = StringField(10);
 }
 
-var record = new MyRecord()
+var record = MyRecord()
   ..description.value = "Pigeons are super cool";
 print("'${record.description.value}'");
 print("'${record.toString()}'");
@@ -240,24 +240,24 @@ Useful when parts of a record (like an address) are repeated in multiple places
  
 ```dart
 class AddressRecord extends Record {
-    StringField address = new StringField(60);
-    StringField city = new StringField(30);
-    StringField state = new StringField(2);
-    StringField postalCode = new StringField(12);
+    StringField address = StringField(60);
+    StringField city = StringField(30);
+    StringField state = StringField(2);
+    StringField postalCode = StringField(12);
 
     AddressRecord();
     AddressRecord.fromString(String record) : super.fromString(record);
 }
 
 class Transaction extends Record {
-    AddressRecord billingAddress = new AddressRecord();
-    AddressRecord shippingAddress = new AddressRecord();
+    AddressRecord billingAddress = AddressRecord();
+    AddressRecord shippingAddress = AddressRecord();
     
     Transaction();
     Transaction.fromString(String record) : super.fromString(record);
 }
 
-var txn = new Transaction()
+var txn = Transaction()
   ..billingAddress.address.value = "PO Box 255"
   ..billingAddress.city.value = "Des Moines"
   ..billingAddress.state.value = "IA"

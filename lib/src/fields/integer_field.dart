@@ -10,7 +10,7 @@ class IntegerField extends FixedWidthField {
     try {
       return int.parse(val.toString());
     } catch (FormatException) {
-      throw new FieldValueException("'$val' is not valid input");
+      throw FieldValueException("'$val' is not valid input");
     }
   }
 

@@ -2,9 +2,9 @@ import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
 class TestRecord extends Record {
-  StringField firstName = new StringField(10, defaultValue: "John");
-  StringField middle = new StringField(5);
-  StringField lastName = new StringField(10);
+  StringField firstName = StringField(10, defaultValue: "John");
+  StringField middle = StringField(5);
+  StringField lastName = StringField(10);
 
   TestRecord() : super();
   TestRecord.fromString(String record) : super.fromString(record);
@@ -13,7 +13,7 @@ class TestRecord extends Record {
 void main() {
   group('Record class tests', () {
     test('Calling toString on record produces joined string', () {
-      var r = new TestRecord()
+      var r = TestRecord()
         ..firstName.value = "John"
         ..middle.value = "N"
         ..lastName.value = "Doe";
@@ -22,13 +22,13 @@ void main() {
     });
 
     test('Length returns the sum of all the field lengths', () {
-      var r = new TestRecord();
+      var r = TestRecord();
 
       expect(r.length, equals(25));
     });
 
     test('From record populates field values with parsed string', () {
-      var r = new TestRecord.fromString("Aaron     L    Madison   ");
+      var r = TestRecord.fromString("Aaron     L    Madison   ");
 
       expect(r.firstName.value, equals("Aaron"));
       expect(r.middle.value, equals("L"));
@@ -37,14 +37,14 @@ void main() {
 
     test('raises exception when longer than expected', () {
       expect(() {
-        new TestRecord.fromString("Aaron     L    Madison   EXTRA_CHARACTERS");
-      }, throwsA(new isInstanceOf<FieldLengthException>()));
+        TestRecord.fromString("Aaron     L    Madison   EXTRA_CHARACTERS");
+      }, throwsA(isA<FieldLengthException>()));
     });
 
     test('raises exception when shorter than expected', () {
       expect(() {
-        new TestRecord.fromString("Aaron");
-      }, throwsA(new isInstanceOf<FieldLengthException>()));
+        TestRecord.fromString("Aaron");
+      }, throwsA(isA<FieldLengthException>()));
     });
   });
 }

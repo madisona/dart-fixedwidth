@@ -8,14 +8,14 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 /// which declare the length of the fixed width field and the type.
 ///
 ///     class AddressRecord extends Record {
-///       address = new StringField(length=50);
-///       address2 = new StringField(length=50);
-///       city = new StringField(length=20);
-///       state = new StringField(length=2);
-///       postal_code = new StringField(length=9);
+///       address = StringField(length=50);
+///       address2 = StringField(length=50);
+///       city = StringField(length=20);
+///       state = StringField(length=2);
+///       postal_code = StringField(length=9);
 ///     }
 ///
-///     var address = new AddressRecord()
+///     var address = AddressRecord()
 ///       ..address.value = "123 Main Street"
 ///       ..city.value = "Mountain View"
 ///       ..state.value = "CA"
@@ -28,7 +28,7 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 ///     Use `fromString` to take a padded string and turn it into the
 ///     dart typed Record class.
 ///
-///     var address = new AddressRecord.fromString(
+///     var address = AddressRecord.fromString(
 ///
 abstract class Record {
   bool autoTruncate = false;
@@ -45,7 +45,7 @@ abstract class Record {
 
   void populateFromString(String record) {
     if (record.length != this.length) {
-      throw new FieldLengthException(
+      throw FieldLengthException(
           "Fixed width record length is ${record.length} but should be ${this.length}");
     }
 

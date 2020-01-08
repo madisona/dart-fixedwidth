@@ -28,7 +28,7 @@ class SignedImpliedDecimalField extends FixedWidthField {
           : "0";
       return num.parse("$sign$numberPart.$decimalPart");
     } catch (FormatException) {
-      throw new FieldValueException("'$val' is not valid input");
+      throw FieldValueException("'$val' is not valid input");
     }
   }
 

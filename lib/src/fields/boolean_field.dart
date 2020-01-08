@@ -11,14 +11,14 @@ class BooleanField extends FixedWidthField {
     if (["Y", "N", "", " "].contains(val)) {
       return val == "Y" ? true : false;
     } else {
-      throw new FieldValueException("'$value' is not valid.");
+      throw FieldValueException("'$value' is not valid.");
     }
   }
 
   @override
   String toRecord(val) {
     if (val is! bool) {
-      throw new FieldValueException("'$val' is not valid. Must be Y/N.");
+      throw FieldValueException("'$val' is not valid. Must be Y/N.");
     }
     return val == true ? "Y" : "N";
   }
