@@ -11,9 +11,9 @@ class NullBooleanField extends BooleanField {
 
   @override
   bool populateFromString(val) {
-    if (val is String && ["Y", "N"].contains(val)) {
-      return val == "Y" ? true : false;
-    } else if ([null, "", " "].contains(val)) {
+    if (val is String && ['Y', 'N'].contains(val)) {
+      return val == 'Y' ? true : false;
+    } else if ([null, '', ' '].contains(val)) {
       return null;
     } else {
       throw FieldValueException("'$value' is not valid.");

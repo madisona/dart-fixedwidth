@@ -20,7 +20,7 @@ class DateTimeField extends FixedWidthField {
   @override
   DateTime populateFromString(val) {
     try {
-      return val.trim() != "" ? DateTime.parse(val) : null;
+      return val.trim() != '' ? DateTime.parse(val) : null;
     } catch (FormatException) {
       throw FieldValueException("'$val' is not valid input");
     }
@@ -28,8 +28,8 @@ class DateTimeField extends FixedWidthField {
 
   @override
   String toRecord(val) {
-    if (value == null || (value is String && value.trim() == "")) {
-      return " " * length;
+    if (value == null || (value is String && value.trim() == '')) {
+      return ' ' * length;
     }
     var val = _format.format(value);
     return val;

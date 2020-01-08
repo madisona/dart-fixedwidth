@@ -45,7 +45,7 @@ class ListField extends FixedWidthField {
   List populateFromString(String val) {
     if (val.length != length) {
       throw FieldLengthException(
-          "Value is ${val.length} characters, but must be $length}");
+          'Value is ${val.length} characters, but must be $length}');
     }
 
     var records = [];
@@ -62,7 +62,7 @@ class ListField extends FixedWidthField {
   List populateFromObj(val) {
     if (val.length != occurs) {
       throw FieldLengthException(
-          "Must set the same number of records as `occurs` ($occurs)");
+          'Must set the same number of records as `occurs` ($occurs)');
     }
     val.forEach((var v) {
       assert(v.runtimeType == cls_mirror.reflectedType);
@@ -74,7 +74,7 @@ class ListField extends FixedWidthField {
   String toRecord(val) {
     return rawVal == null
         ? _getEmptyRecord().toString() * occurs
-        : rawVal.map((v) => v.toString()).join("");
+        : rawVal.map((v) => v.toString()).join('');
   }
 
   int get length => singleRecordLength * occurs;

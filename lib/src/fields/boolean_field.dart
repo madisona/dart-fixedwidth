@@ -8,8 +8,8 @@ class BooleanField extends FixedWidthField {
 
   @override
   bool populateFromString(val) {
-    if (["Y", "N", "", " "].contains(val)) {
-      return val == "Y" ? true : false;
+    if (['Y', 'N', '', ' '].contains(val)) {
+      return val == 'Y' ? true : false;
     } else {
       throw FieldValueException("'$value' is not valid.");
     }
@@ -20,6 +20,6 @@ class BooleanField extends FixedWidthField {
     if (val is! bool) {
       throw FieldValueException("'$val' is not valid. Must be Y/N.");
     }
-    return val == true ? "Y" : "N";
+    return val == true ? 'Y' : 'N';
   }
 }

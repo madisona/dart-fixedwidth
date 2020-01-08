@@ -10,5 +10,5 @@ String floatPadding(int length, num val, {int fractionalDigits: 2}) {
 String impliedDecimalPadding(int length, num val, {int fractionalDigits: 2}) {
   length = fractionalDigits > 0 ? length + 1 : length;
   var padded = floatPadding(length, val, fractionalDigits: fractionalDigits);
-  return padded.replaceFirst(".", "");
+  return padded.replaceFirst('.', '');
 }

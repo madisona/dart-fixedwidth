@@ -25,7 +25,7 @@ class SignedImpliedDecimalField extends FixedWidthField {
       var numberPart = val.substring(0, val.length - (decimals + 1));
       var decimalPart = decimals > 0
           ? val.substring(val.length - (decimals + 1), val.length - 1)
-          : "0";
+          : '0';
       return num.parse("$sign$numberPart.$decimalPart");
     } catch (FormatException) {
       throw FieldValueException("'$val' is not valid input");
@@ -36,7 +36,7 @@ class SignedImpliedDecimalField extends FixedWidthField {
   String toRecord(val) {
     var stringVal = impliedDecimalPadding(length - 1, (val ?? 0).abs(),
         fractionalDigits: decimals);
-    var sign = val >= 0 ? "+" : "-";
+    var sign = val >= 0 ? '+' : '-';
     return stringVal + sign;
   }
 }

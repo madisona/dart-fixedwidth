@@ -36,17 +36,17 @@ abstract class Record {
 
   Record();
 
-  /**
-   * Takes a fixed width string and populates the Record class
-   */
+  ///
+  /// Takes a fixed width string and populates the Record class
+  ///
   Record.fromString(String record) {
     populateFromString(record);
   }
 
   void populateFromString(String record) {
-    if (record.length != this.length) {
+    if (record.length != length) {
       throw FieldLengthException(
-          "Fixed width record length is ${record.length} but should be ${this.length}");
+          'Fixed width record length is ${record.length} but should be ${length}');
     }
 
     var pos = 0;
@@ -64,8 +64,8 @@ abstract class Record {
   /// returns the list of FixedWidthField instance variables in order defined
   Iterable<dynamic> get fields {
     if (_fieldsList == null) {
-      InstanceMirror im = reflect(this);
-      ClassMirror cm = im.type;
+      var im = reflect(this);
+      var cm = im.type;
 
       var fieldList = [];
 
