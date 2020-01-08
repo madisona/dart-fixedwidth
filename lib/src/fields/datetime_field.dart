@@ -12,7 +12,7 @@ class DateTimeField extends FixedWidthField {
 
   DateTimeField(int length, {DateTime defaultValue, DateFormat format})
       : super(length, defaultValue: defaultValue) {
-    _format = format != null ? format : DateFormat("yyyy-MM-dd HH:mm:ss");
+    _format = format ?? DateFormat('yyyy-MM-dd HH:mm:ss');
   }
 
   /// Tries to parse the datetime input if necessary.

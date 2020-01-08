@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2
+- Fixed more pana violations. No functional changes.
+
 ## 0.4.1
 - Fixed style violations. No functional changes.
 

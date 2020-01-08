@@ -37,7 +37,7 @@ class ListField extends FixedWidthField {
   ClassMirror cls_mirror;
   int occurs;
 
-  ListField(record_class, {int this.occurs: 1}) : super(null) {
+  ListField(record_class, {this.occurs = 1}) : super(null) {
     cls_mirror = reflectClass(record_class);
   }
 
@@ -77,11 +77,11 @@ class ListField extends FixedWidthField {
         : rawVal.map((v) => v.toString()).join('');
   }
 
+  @override
   int get length => singleRecordLength * occurs;
 
   int get singleRecordLength => _getEmptyRecord().length;
 
-  dynamic _getEmptyRecord([String symbolName = '', List args]) => cls_mirror
-      .newInstance(Symbol(symbolName), args == null ? [] : args)
-      .reflectee;
+  dynamic _getEmptyRecord([String symbolName = '', List args]) =>
+      cls_mirror.newInstance(Symbol(symbolName), args ?? []).reflectee;
 }

@@ -8,7 +8,7 @@ import '../exceptions.dart';
 ///
 class ImpliedDecimalField extends FixedWidthField {
   num decimals;
-  ImpliedDecimalField(int length, {num defaultValue, int this.decimals: 2})
+  ImpliedDecimalField(int length, {num defaultValue, this.decimals = 2})
       : super(length, defaultValue: defaultValue);
 
   @override
@@ -17,8 +17,8 @@ class ImpliedDecimalField extends FixedWidthField {
     try {
       var numberPart = val.substring(0, val.length - decimals);
       var decimalPart =
-          decimals > 0 ? val.substring(val.length - decimals, val.length) : "0";
-      return num.parse("$numberPart.$decimalPart");
+          decimals > 0 ? val.substring(val.length - decimals, val.length) : '0';
+      return num.parse('$numberPart.$decimalPart');
     } catch (FormatException) {
       throw FieldValueException("'$val' is not valid input");
     }

@@ -15,5 +15,5 @@ class IntegerField extends FixedWidthField {
   }
 
   @override
-  String toRecord(val) => (val ?? 0).toString().padLeft(length, "0");
+  String toRecord(val) => (val ?? 0).toString().padLeft(length, '0');
 }

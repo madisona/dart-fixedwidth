@@ -4,7 +4,7 @@ import '../exceptions.dart';
 
 class DecimalField extends FixedWidthField {
   num decimals;
-  DecimalField(int length, {num defaultValue, int this.decimals: 2})
+  DecimalField(int length, {num defaultValue, this.decimals = 2})
       : super(length, defaultValue: defaultValue);
 
   @override

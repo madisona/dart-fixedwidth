@@ -23,11 +23,11 @@ class NullBooleanField extends BooleanField {
   @override
   String toRecord(val) {
     if (val == true) {
-      return "Y";
+      return 'Y';
     } else if (val == false) {
-      return "N";
+      return 'N';
     } else if (val == null) {
-      return " ";
+      return ' ';
     } else {
       throw FieldValueException("'$val' is not valid. Must be Y/N or null.");
     }

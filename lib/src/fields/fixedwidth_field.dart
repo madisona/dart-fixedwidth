@@ -40,8 +40,8 @@ abstract class FixedWidthField {
 
   dynamic get value => rawVal;
 
-  populateFromString(String val) => val.trimRight();
-  populateFromObj(dynamic val) => val;
+  dynamic populateFromString(String val) => val.trimRight();
+  dynamic populateFromObj(dynamic val) => val;
 
   /// Each subclass will define their own implementation
   /// Set value's job is to set rawVal equal to the appropriate
@@ -49,17 +49,18 @@ abstract class FixedWidthField {
   ///
   /// Values may either be set directly by assigning the typed object
   /// or it may be coming from a fixed width string and need to be converted.
-  void set value(dynamic val) {
+  set value(dynamic val) {
     rawVal = val is String ? populateFromString(val) : populateFromObj(val);
   }
 
   /// `toRecord` will be overridden in each subclass
   ///
   /// its job is to turn the value into a properly formatted string
-  String toRecord(dynamic val) => (value ?? "").padRight(length);
+  String toRecord(dynamic val) => (value ?? '').padRight(length);
 
   /// toString turns the value to a string. Don't override this directly
   /// in subclasses. Instead - use `toRecord`.
+  @override
   String toString() {
     var val = toRecord(value);
     if (autoTruncate == true) {

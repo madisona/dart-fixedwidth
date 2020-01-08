@@ -76,7 +76,9 @@ abstract class Record {
           if (field is FixedWidthField || field is Record) {
             fieldList.add(field);
           }
-        } catch (NoSuchMethodError) {}
+        } catch (NoSuchMethodError) {
+          // ignore
+        }
       }
 
       _fieldsList = fieldList;
@@ -85,7 +87,8 @@ abstract class Record {
   }
 
   /// Turns the record into the flat, properly padded string version
-  String toString() => fields.map((e) => e.toString()).join("");
+  @override
+  String toString() => fields.map((e) => e.toString()).join('');
 
   /// Returns the total length of the defined Record
   num get length => fields.fold(0, (prev, element) => prev + element.length);
