@@ -34,11 +34,11 @@ import 'fixedwidth_field.dart';
 ///   }
 ///
 class ListField extends FixedWidthField {
-  ClassMirror cls_mirror;
+  late ClassMirror clsMirror;
   int occurs;
 
-  ListField(record_class, {this.occurs = 1}) : super(null) {
-    cls_mirror = reflectClass(record_class);
+  ListField(record_class, {this.occurs = 1}) : super(0) {
+    clsMirror = reflectClass(record_class);
   }
 
   @override
@@ -65,7 +65,7 @@ class ListField extends FixedWidthField {
           'Must set the same number of records as `occurs` ($occurs)');
     }
     val.forEach((var v) {
-      assert(v.runtimeType == cls_mirror.reflectedType);
+      assert(v.runtimeType == clsMirror.reflectedType);
     });
     return val;
   }
@@ -82,6 +82,6 @@ class ListField extends FixedWidthField {
 
   int get singleRecordLength => _getEmptyRecord().length;
 
-  dynamic _getEmptyRecord([String symbolName = '', List args]) =>
-      cls_mirror.newInstance(Symbol(symbolName), args ?? []).reflectee;
+  dynamic _getEmptyRecord([String symbolName = '', List? args]) =>
+      clsMirror.newInstance(Symbol(symbolName), args ?? []).reflectee;
 }

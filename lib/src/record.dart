@@ -52,12 +52,13 @@ abstract class Record {
     var pos = 0;
     for (var field in fields) {
       if (field is Record) {
-        field.populateFromString(record.substring(pos, pos + field.length));
+        field.populateFromString(
+            record.substring(pos, (pos + field.length) as int?));
       } else {
-        field.value = record.substring(pos, pos + field.length);
+        field.value = record.substring(pos, (pos + field.length) as int?);
       }
 
-      pos += field.length;
+      pos += field.length as int;
     }
   }
 

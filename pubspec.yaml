@@ -1,14 +1,14 @@
 name: fixedwidth
 description: A library for working with fixed width files in dart. Easily turn data to and convert from properly formatted fixed width strings with readable layout definitions.
-version: 0.4.2
+version: 0.5.0
 homepage: https://github.com/madisona/dart-fixedwidth
-author: Aaron Madison <aaron.l.madison@gmail.com>
 
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=3.0.0 <3.6.0'
 
 dependencies:
-  intl: ^0.16.1
+  intl: ^0.20.0
 
 dev_dependencies:
-  test: ^1.6.3
+  lints: ^5.0.0
+  test: ^1.25.8

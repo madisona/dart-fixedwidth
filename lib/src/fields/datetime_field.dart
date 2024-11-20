@@ -8,17 +8,17 @@ import '../exceptions.dart';
 /// length that matches the field length specified.
 ///
 class DateTimeField extends FixedWidthField {
-  DateFormat _format;
+  late DateFormat _format;
 
-  DateTimeField(int length, {DateTime defaultValue, DateFormat format})
-      : super(length, defaultValue: defaultValue) {
+  DateTimeField(super.length,
+      {DateTime? super.defaultValue, DateFormat? format}) {
     _format = format ?? DateFormat('yyyy-MM-dd HH:mm:ss');
   }
 
   /// Tries to parse the datetime input if necessary.
   /// See the `DateTime.parse` documentation for accepted formats.
   @override
-  DateTime populateFromString(val) {
+  DateTime? populateFromString(val) {
     try {
       return val.trim() != '' ? DateTime.parse(val) : null;
     } catch (FormatException) {

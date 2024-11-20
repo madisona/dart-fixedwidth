@@ -7,9 +7,9 @@ import '../exceptions.dart';
 /// For example: 125.55 in a field of length 8 would be `00012555`
 ///
 class ImpliedDecimalField extends FixedWidthField {
-  num decimals;
-  ImpliedDecimalField(int length, {num defaultValue, this.decimals = 2})
-      : super(length, defaultValue: defaultValue);
+  int decimals;
+  ImpliedDecimalField(super.length,
+      {num? super.defaultValue, this.decimals = 2});
 
   @override
   num populateFromString(dynamic val) {

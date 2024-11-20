@@ -1,16 +1,16 @@
 import 'package:fixedwidth/fixedwidth.dart';
+import 'package:fixedwidth/src/fields/fixedwidth_field.dart';
 import '../exceptions.dart';
 
 /// NullBooleanField is for a string output of Y/N, or ' '
 ///
 /// Same as a BooleanField, but allows a null value
 ///
-class NullBooleanField extends BooleanField {
-  NullBooleanField({int length = 1, bool defaultValue})
-      : super(length: length, defaultValue: defaultValue);
+class NullBooleanField extends FixedWidthField {
+  NullBooleanField({int length = 1, bool? super.defaultValue}) : super(length);
 
   @override
-  bool populateFromString(val) {
+  bool? populateFromString(String? val) {
     if (val is String && ['Y', 'N'].contains(val)) {
       return val == 'Y' ? true : false;
     } else if ([null, '', ' '].contains(val)) {
