@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.0
+- Dart3 compatibility
+
 ## 0.4.2
 - Fixed more pana violations. No functional changes.
 
