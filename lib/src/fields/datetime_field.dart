@@ -21,7 +21,7 @@ class DateTimeField extends FixedWidthField {
   DateTime? populateFromString(val) {
     try {
       return val.trim() != '' ? DateTime.parse(val) : null;
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

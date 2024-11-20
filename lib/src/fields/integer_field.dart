@@ -8,7 +8,7 @@ class IntegerField extends FixedWidthField {
   int populateFromString(val) {
     try {
       return int.parse(val.toString());
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

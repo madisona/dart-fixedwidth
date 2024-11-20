@@ -19,7 +19,7 @@ class ImpliedDecimalField extends FixedWidthField {
       var decimalPart =
           decimals > 0 ? val.substring(val.length - decimals, val.length) : '0';
       return num.parse('$numberPart.$decimalPart');
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

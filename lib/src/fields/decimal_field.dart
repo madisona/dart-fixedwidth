@@ -10,7 +10,7 @@ class DecimalField extends FixedWidthField {
   num populateFromString(val) {
     try {
       return num.parse(val.toString());
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

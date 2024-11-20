@@ -37,8 +37,8 @@ class ListField extends FixedWidthField {
   late ClassMirror clsMirror;
   int occurs;
 
-  ListField(record_class, {this.occurs = 1}) : super(0) {
-    clsMirror = reflectClass(record_class);
+  ListField(recordClass, {this.occurs = 1}) : super(0) {
+    clsMirror = reflectClass(recordClass);
   }
 
   @override

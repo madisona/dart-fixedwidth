@@ -1,7 +1,8 @@
 import 'package:fixedwidth/fixedwidth.dart';
 
 class MyRecord extends Record {
-  bool autoTruncate = true;
+  @override
+  bool get autoTruncate => true;
 
   StringField animal = StringField(10);
   StringField description = StringField(10);

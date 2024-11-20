@@ -46,7 +46,7 @@ abstract class Record {
   void populateFromString(String record) {
     if (record.length != length) {
       throw FieldLengthException(
-          'Fixed width record length is ${record.length} but should be ${length}');
+          'Fixed width record length is ${record.length} but should be $length');
     }
 
     var pos = 0;
