@@ -7,7 +7,7 @@ class TestRecord extends Record {
   StringField lastName = StringField(10);
 
   TestRecord() : super();
-  TestRecord.fromString(String record) : super.fromString(record);
+  TestRecord.fromString(super.record) : super.fromString();
 }
 
 void main() {

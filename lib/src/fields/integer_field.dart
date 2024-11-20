@@ -2,14 +2,13 @@ import 'fixedwidth_field.dart' show FixedWidthField;
 import '../exceptions.dart';
 
 class IntegerField extends FixedWidthField {
-  IntegerField(int length, {int defaultValue})
-      : super(length, defaultValue: defaultValue);
+  IntegerField(super.length, {int? super.defaultValue});
 
   @override
   int populateFromString(val) {
     try {
       return int.parse(val.toString());
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

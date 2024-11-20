@@ -3,15 +3,14 @@ import '../utils.dart';
 import '../exceptions.dart';
 
 class DecimalField extends FixedWidthField {
-  num decimals;
-  DecimalField(int length, {num defaultValue, this.decimals = 2})
-      : super(length, defaultValue: defaultValue);
+  int decimals;
+  DecimalField(super.length, {num? super.defaultValue, this.decimals = 2});
 
   @override
   num populateFromString(val) {
     try {
       return num.parse(val.toString());
-    } catch (FormatException) {
+    } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
   }

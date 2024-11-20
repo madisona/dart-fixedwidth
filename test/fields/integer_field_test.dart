@@ -3,10 +3,10 @@ import 'package:test/test.dart';
 
 class IntRecordSample extends Record {
   IntegerField account = IntegerField(3);
-  IntegerField txn_amount = IntegerField(5);
+  IntegerField txnAmount = IntegerField(5);
 
   IntRecordSample() : super();
-  IntRecordSample.fromString(String record) : super.fromString(record);
+  IntRecordSample.fromString(super.record) : super.fromString();
 }
 
 void main() {
@@ -38,7 +38,7 @@ void main() {
       var record = IntRecordSample.fromString("01500950");
 
       expect(record.account.value, equals(15));
-      expect(record.txn_amount.value, equals(950));
+      expect(record.txnAmount.value, equals(950));
     });
 
     test('raises exception when bad input', () {

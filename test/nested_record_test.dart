@@ -8,25 +8,25 @@ class TestRecord extends Record {
   IntegerField zipCode = IntegerField(5);
 
   TestRecord() : super();
-  TestRecord.fromString(String record) : super.fromString(record);
+  TestRecord.fromString(super.record) : super.fromString();
 }
 
 class RecordTwo extends Record {
-  StringField first_name = StringField(10);
-  StringField last_name = StringField(10);
+  StringField firstName = StringField(10);
+  StringField lastName = StringField(10);
   TestRecord address = TestRecord();
   IntegerField age = IntegerField(3);
 
   RecordTwo() : super();
-  RecordTwo.fromString(String record) : super.fromString(record);
+  RecordTwo.fromString(super.record) : super.fromString();
 }
 
 void main() {
   group('NestedRecord tests', () {
     test('toString returns padded length', () {
       var record = RecordTwo()
-        ..first_name.value = "John"
-        ..last_name.value = "Doe"
+        ..firstName.value = "John"
+        ..lastName.value = "Doe"
         ..age.value = 45
         ..address.address.value = "123 1st St"
         ..address.city.value = "Des Moines"
@@ -52,14 +52,14 @@ void main() {
     test('loads object from complex fixed width string', () {
       var str =
           "John      Doe       123 1st St                    Des Moines                    IA50131025";
-      var record_two = RecordTwo.fromString(str);
-      expect(record_two.first_name.value, "John");
-      expect(record_two.last_name.value, "Doe");
-      expect(record_two.address.address.value, "123 1st St");
-      expect(record_two.address.city.value, "Des Moines");
-      expect(record_two.address.state.value, "IA");
-      expect(record_two.address.zipCode.value, 50131);
-      expect(record_two.age.value, 25);
+      var recordTwo = RecordTwo.fromString(str);
+      expect(recordTwo.firstName.value, "John");
+      expect(recordTwo.lastName.value, "Doe");
+      expect(recordTwo.address.address.value, "123 1st St");
+      expect(recordTwo.address.city.value, "Des Moines");
+      expect(recordTwo.address.state.value, "IA");
+      expect(recordTwo.address.zipCode.value, 50131);
+      expect(recordTwo.age.value, 25);
     });
 
     test('Errors when fixed width string is not properly formatted', () {
@@ -72,9 +72,9 @@ void main() {
     });
 
     test('toString returns padded length when value is null', () {
-      var record_two = RecordTwo();
+      var recordTwo = RecordTwo();
       expect(
-          record_two.toString(),
+          recordTwo.toString(),
           equals(
               "                                                                                  00000000"));
     });

@@ -3,11 +3,10 @@ import '../exceptions.dart';
 
 /// BooleanField is for a string output of Y/N
 class BooleanField extends FixedWidthField {
-  BooleanField({int length = 1, bool defaultValue})
-      : super(length, defaultValue: defaultValue);
+  BooleanField({int length = 1, bool? super.defaultValue}) : super(length);
 
   @override
-  bool populateFromString(val) {
+  bool populateFromString(String val) {
     if (['Y', 'N', '', ' '].contains(val)) {
       return val == 'Y' ? true : false;
     } else {

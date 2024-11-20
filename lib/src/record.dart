@@ -32,7 +32,7 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 ///
 abstract class Record {
   bool autoTruncate = false;
-  Iterable<dynamic> _fieldsList;
+  Iterable<dynamic>? _fieldsList;
 
   Record();
 
@@ -46,18 +46,19 @@ abstract class Record {
   void populateFromString(String record) {
     if (record.length != length) {
       throw FieldLengthException(
-          'Fixed width record length is ${record.length} but should be ${length}');
+          'Fixed width record length is ${record.length} but should be $length');
     }
 
     var pos = 0;
     for (var field in fields) {
       if (field is Record) {
-        field.populateFromString(record.substring(pos, pos + field.length));
+        field.populateFromString(
+            record.substring(pos, (pos + field.length) as int?));
       } else {
-        field.value = record.substring(pos, pos + field.length);
+        field.value = record.substring(pos, (pos + field.length) as int?);
       }
 
-      pos += field.length;
+      pos += field.length as int;
     }
   }
 
@@ -76,14 +77,14 @@ abstract class Record {
           if (field is FixedWidthField || field is Record) {
             fieldList.add(field);
           }
-        } catch (NoSuchMethodError) {
+        } on NoSuchMethodError {
           // ignore
         }
       }
 
       _fieldsList = fieldList;
     }
-    return _fieldsList;
+    return _fieldsList!;
   }
 
   /// Turns the record into the flat, properly padded string version
