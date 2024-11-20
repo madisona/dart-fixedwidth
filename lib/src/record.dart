@@ -32,7 +32,7 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 ///
 abstract class Record {
   bool autoTruncate = false;
-  Iterable<dynamic> _fieldsList;
+  Iterable<dynamic>? _fieldsList;
 
   Record();
 
@@ -77,14 +77,14 @@ abstract class Record {
           if (field is FixedWidthField || field is Record) {
             fieldList.add(field);
           }
-        } catch (NoSuchMethodError) {
+        } on NoSuchMethodError {
           // ignore
         }
       }
 
       _fieldsList = fieldList;
     }
-    return _fieldsList;
+    return _fieldsList!;
   }
 
   /// Turns the record into the flat, properly padded string version
