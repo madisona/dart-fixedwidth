@@ -1,4 +1,9 @@
 # Changelog
+## 0.5.2
+- Bump constraints enable 3.7
+
+## 0.5.1
+- Bump constraints enable 3.6
 
 ## 0.5.0
 - Dart3 compatibility
