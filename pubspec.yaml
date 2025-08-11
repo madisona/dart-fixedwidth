@@ -4,7 +4,7 @@ version: 0.5.2
 homepage: https://github.com/madisona/dart-fixedwidth
 
 environment:
-  sdk: '>=3.0.0 <3.8.0'
+  sdk: '>=3.0.0 <3.9.0'
 
 dependencies:
   intl: ^0.20.0
