@@ -1,4 +1,7 @@
 # Changelog
+## 0.5.4
+- Bump constraints enable 3.10
+
 ## 0.5.3
 - Bump constraints enable 3.8
   
