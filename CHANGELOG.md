@@ -1,4 +1,7 @@
 # Changelog
+## 0.5.5
+- Bump constraints to support Dart 3.12.2
+
 ## 0.5.4
 - Bump constraints enable 3.10
 
