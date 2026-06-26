@@ -9,11 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk: [3.4.3, stable, beta, dev]
     steps:
       - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.12.2'
+          sdk: ${{ matrix.sdk }}
 
       - run: dart pub get
       - run: dart format . --output=none --set-exit-if-changed
