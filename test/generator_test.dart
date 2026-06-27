@@ -38,7 +38,8 @@ class GenNestedChildRecord extends Record with _$GenNestedChildRecordFields {
 class GenParentRecord extends Record with _$GenParentRecordFields {
   StringField header = StringField(10);
   GenNestedChildRecord child = GenNestedChildRecord();
-  ListField<GenNestedChildRecord> children = ListField(() => GenNestedChildRecord(), occurs: 2);
+  ListField<GenNestedChildRecord> children =
+      ListField(() => GenNestedChildRecord(), occurs: 2);
 
   GenParentRecord() : super();
   GenParentRecord.fromString(super.record) : super.fromString();
@@ -52,7 +53,9 @@ class GenEmptyRecord extends Record with _$GenEmptyRecordFields {
 
 void main() {
   group('Code Generator tests', () {
-    test('Generated fields list contains only non-static, non-private, non-synthetic FixedWidthFields', () {
+    test(
+        'Generated fields list contains only non-static, non-private, non-synthetic FixedWidthFields',
+        () {
       var record = GenTestRecord();
 
       // The length should only be the sum of 'name' (10) and 'age' (3) = 13.
@@ -65,7 +68,9 @@ void main() {
       expect(fieldsList[1], equals(record.age));
     });
 
-    test('Nested Record and ListField fields are correctly processed and ordered', () {
+    test(
+        'Nested Record and ListField fields are correctly processed and ordered',
+        () {
       var record = GenParentRecord();
 
       // Length should be header (10) + child (5) + children (5 * 2) = 25
