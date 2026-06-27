@@ -35,7 +35,7 @@ class SignedImpliedDecimalField extends FixedWidthField {
   String toRecord(val) {
     var stringVal = impliedDecimalPadding(length - 1, (val ?? 0).abs(),
         fractionalDigits: decimals);
-    var sign = val >= 0 ? '+' : '-';
+    var sign = (val ?? 0) >= 0 ? '+' : '-';
     return stringVal + sign;
   }
 }

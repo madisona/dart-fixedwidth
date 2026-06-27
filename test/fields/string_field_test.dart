@@ -39,5 +39,11 @@ void main() {
       expect(field.value, equals("Peter"));
       expect(field.toString(), equals("Peter     "));
     });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = StringField(10);
+      field.value = "John";
+      expect(field.toRecord("Peter"), equals("Peter     "));
+    });
   });
 }

@@ -49,5 +49,11 @@ void main() {
         IntRecordSample.fromString("015A0950");
       }, throwsA(isA<FieldValueException>()));
     });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = IntegerField(5);
+      field.value = 100;
+      expect(field.toRecord(250), equals("00250"));
+    });
   });
 }

@@ -98,5 +98,13 @@ void main() {
           throwsA(predicate((e) =>
               e is FieldLengthException && e.message == expectedMessage)));
     });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = DateTimeField(10, format: DateFormat("yyyy-MM-dd"));
+      field.value = DateTime(2018, 1, 1);
+
+      var alternateDate = DateTime(2020, 5, 20);
+      expect(field.toRecord(alternateDate), "2020-05-20");
+    });
   });
 }

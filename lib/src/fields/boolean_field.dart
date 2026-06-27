@@ -10,7 +10,7 @@ class BooleanField extends FixedWidthField {
     if (['Y', 'N', '', ' '].contains(val)) {
       return val == 'Y' ? true : false;
     } else {
-      throw FieldValueException("'$value' is not valid.");
+      throw FieldValueException("'$val' is not valid.");
     }
   }
 

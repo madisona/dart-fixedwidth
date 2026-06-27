@@ -72,9 +72,9 @@ class ListField<T extends Record> extends FixedWidthField {
 
   @override
   String toRecord(val) {
-    return rawVal == null
+    return val == null
         ? recordFactory().toString() * occurs
-        : rawVal.map((v) => v.toString()).join('');
+        : val.map((v) => v.toString()).join('');
   }
 
   @override

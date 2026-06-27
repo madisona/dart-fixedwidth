@@ -28,10 +28,9 @@ class DateTimeField extends FixedWidthField {
 
   @override
   String toRecord(val) {
-    if (value == null || (value is String && value.trim() == '')) {
+    if (val == null || (val is String && val.trim() == '')) {
       return ' ' * length;
     }
-    var val = _format.format(value);
-    return val;
+    return _format.format(val);
   }
 }

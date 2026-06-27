@@ -91,5 +91,26 @@ void main() {
       expect(field.value, null);
       expect(field.toString(), equals("     00000     00000"));
     });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      var record1 = SimpleRecord()
+        ..textField.value = "one"
+        ..intField.value = 130;
+      var record2 = SimpleRecord()
+        ..textField.value = "two"
+        ..intField.value = 10;
+      field.value = [record1, record2];
+
+      var recordAlt1 = SimpleRecord()
+        ..textField.value = "alt"
+        ..intField.value = 5;
+      var recordAlt2 = SimpleRecord()
+        ..textField.value = "oth"
+        ..intField.value = 8;
+
+      expect(field.toRecord([recordAlt1, recordAlt2]),
+          equals("alt  00005oth  00008"));
+    });
   });
 }
