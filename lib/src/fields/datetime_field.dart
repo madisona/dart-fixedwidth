@@ -18,7 +18,7 @@ class DateTimeField extends FixedWidthField {
   /// Tries to parse the datetime input if necessary.
   /// See the `DateTime.parse` documentation for accepted formats.
   @override
-  DateTime? populateFromString(val) {
+  DateTime? populateFromString(String val) {
     try {
       return val.trim() != '' ? DateTime.parse(val) : null;
     } on FormatException {

@@ -92,6 +92,12 @@ void main() {
       expect(field.toString(), equals("     00000     00000"));
     });
 
+    test('allows setting value to null', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      field.value = null;
+      expect(field.value, null);
+    });
+
     test('toRecord uses passed in value rather than member state value', () {
       var field = ListField(() => SimpleRecord(), occurs: 2);
       var record1 = SimpleRecord()

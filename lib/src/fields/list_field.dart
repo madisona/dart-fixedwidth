@@ -59,7 +59,8 @@ class ListField<T extends Record> extends FixedWidthField {
   }
 
   @override
-  List populateFromObj(val) {
+  List<T>? populateFromObj(val) {
+    if (val == null) return null;
     if (val.length != occurs) {
       throw FieldLengthException(
           'Must set the same number of records as `occurs` ($occurs)');
@@ -67,7 +68,7 @@ class ListField<T extends Record> extends FixedWidthField {
     val.forEach((dynamic v) {
       assert(v is T);
     });
-    return val;
+    return val is List<T> ? val : List<T>.from(val);
   }
 
   @override

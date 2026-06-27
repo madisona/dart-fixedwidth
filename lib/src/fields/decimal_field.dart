@@ -7,9 +7,9 @@ class DecimalField extends FixedWidthField {
   DecimalField(super.length, {num? super.defaultValue, this.decimals = 2});
 
   @override
-  num populateFromString(val) {
+  num populateFromString(String val) {
     try {
-      return num.parse(val.toString());
+      return num.parse(val);
     } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }
