@@ -5,3 +5,8 @@
 
 # Lint rules and documentation, see http://dart-lang.github.io/linter/lints
 include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    annotate_overrides: false
+

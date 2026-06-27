@@ -1,11 +1,17 @@
 import 'package:fixedwidth/fixedwidth.dart';
 
-class MyRecord extends Record {
+part 'auto_truncate_example.g.dart';
+
+@fixedWidth
+class MyRecord extends Record with _$MyRecordFields {
   @override
   bool get autoTruncate => true;
 
   StringField animal = StringField(10);
   StringField description = StringField(10);
+
+  MyRecord() : super();
+  MyRecord.fromString(super.record) : super.fromString();
 }
 
 void main() {

@@ -46,16 +46,11 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
 
     final abstractGetters = fieldsInfo.isEmpty
         ? ''
-        : fieldsInfo
-                .map((info) => '${info.type} get ${info.name};')
-                .join('\n  ') +
-            '\n';
+        : '${fieldsInfo.map((info) => '${info.type} get ${info.name};').join('\n  ')}\n';
 
     final fieldsListContent = fieldsInfo.isEmpty
         ? ''
-        : '\n    ' +
-            fieldsInfo.map((info) => info.name).join(',\n    ') +
-            ',\n  ';
+        : '\n    ${fieldsInfo.map((info) => info.name).join(',\n    ')},\n  ';
 
     final mixinName = '_\$${className}Fields';
 

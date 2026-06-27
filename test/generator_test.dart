@@ -14,7 +14,7 @@ class GenTestRecord extends Record with _$GenTestRecordFields {
 
   // Private field (should be ignored)
   // ignore: unused_field
-  IntegerField _ignoredPrivate = IntegerField(2);
+  final IntegerField _ignoredPrivate = IntegerField(2);
 
   // Synthetic field / getter (should be ignored)
   StringField get ignoredGetter => StringField(4);
