@@ -36,6 +36,7 @@ import 'fixedwidth_field.dart';
 class ListField<T extends Record> extends FixedWidthField {
   final T Function() recordFactory;
   final int occurs;
+  int? _singleRecordLength;
 
   ListField(this.recordFactory, {this.occurs = 1}) : super(0);
 
@@ -43,14 +44,14 @@ class ListField<T extends Record> extends FixedWidthField {
   List<T> populateFromString(String val) {
     if (val.length != length) {
       throw FieldLengthException(
-          'Value is ${val.length} characters, but must be $length}');
+          'Value is ${val.length} characters, but must be $length');
     }
 
     var records = <T>[];
     var recordLength = singleRecordLength;
     for (var i = 0; i < occurs; i++) {
       var record = recordFactory();
-      record.populateFromString(val.substring(0, singleRecordLength));
+      record.populateFromString(val.substring(0, recordLength));
       records.add(record);
       val = val.substring(recordLength, val.length);
     }
@@ -79,5 +80,6 @@ class ListField<T extends Record> extends FixedWidthField {
   @override
   int get length => singleRecordLength * occurs;
 
-  int get singleRecordLength => recordFactory().length.toInt();
+  int get singleRecordLength =>
+      _singleRecordLength ??= recordFactory().length.toInt();
 }

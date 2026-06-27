@@ -44,21 +44,25 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
       }
     }
 
-    final abstractGetters = fieldsInfo.isEmpty
-        ? ''
-        : '${fieldsInfo.map((info) => '${info.type} get ${info.name};').join('\n  ')}\n';
-
-    final fieldsListContent = fieldsInfo.isEmpty
-        ? ''
-        : '\n    ${fieldsInfo.map((info) => info.name).join(',\n    ')},\n  ';
-
     final mixinName = '_\$${className}Fields';
+    final String fieldsBody;
+    if (fieldsInfo.isEmpty) {
+      fieldsBody = '@override\n  Iterable<dynamic> get fields => [];';
+    } else {
+      final fieldsList =
+          fieldsInfo.map((info) => 'self.${info.name},').join('\n      ');
+      fieldsBody = '''@override
+  Iterable<dynamic> get fields {
+    final self = this as $className;
+    return [
+      $fieldsList
+    ];
+  }''';
+    }
 
     return '''
 mixin $mixinName on Record {
-  $abstractGetters
-  @override
-  Iterable<dynamic> get fields => [$fieldsListContent];
+  $fieldsBody
 }
 ''';
   }
