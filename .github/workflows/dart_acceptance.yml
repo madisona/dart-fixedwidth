@@ -30,9 +30,5 @@ jobs:
         if: matrix.sdk == 'stable'
         run: dart analyze
 
-      - name: Downgrade dependencies for legacy testing
-        if: matrix.sdk == '3.0'
-        run: dart pub downgrade
-
       - name: Run Tests
         run: dart test
