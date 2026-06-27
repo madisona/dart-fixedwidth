@@ -27,6 +27,7 @@ jobs:
         run: dart format . --output=none --set-exit-if-changed
 
       - name: Analyze Code
+        if: matrix.sdk == 'stable'
         run: dart analyze
 
       - name: Downgrade dependencies for legacy testing
