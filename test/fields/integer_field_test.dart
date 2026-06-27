@@ -1,7 +1,10 @@
 import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
-class IntRecordSample extends Record {
+part 'integer_field_test.g.dart';
+
+@fixedWidth
+class IntRecordSample extends Record with _$IntRecordSampleFields {
   IntegerField account = IntegerField(3);
   IntegerField txnAmount = IntegerField(5);
 

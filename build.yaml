@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      fixedwidth:fixedwidth:
+        enabled: true
+      source_gen:combining_builder:
+        enabled: true
+
+builders:
+  fixedwidth:
+    import: 'package:fixedwidth/src/generator/builder.dart'
+    builder_factories: ['fixedWidthBuilder']
+    build_extensions: {'.dart': ['.fixedwidth.g.part']}
+    auto_apply: dependents
+    build_to: cache

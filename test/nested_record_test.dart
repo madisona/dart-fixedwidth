@@ -1,7 +1,10 @@
 import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
-class TestRecord extends Record {
+part 'nested_record_test.g.dart';
+
+@fixedWidth
+class TestRecord extends Record with _$TestRecordFields {
   StringField address = StringField(30);
   StringField city = StringField(30);
   StringField state = StringField(2);
@@ -11,7 +14,8 @@ class TestRecord extends Record {
   TestRecord.fromString(super.record) : super.fromString();
 }
 
-class RecordTwo extends Record {
+@fixedWidth
+class RecordTwo extends Record with _$RecordTwoFields {
   StringField firstName = StringField(10);
   StringField lastName = StringField(10);
   TestRecord address = TestRecord();
