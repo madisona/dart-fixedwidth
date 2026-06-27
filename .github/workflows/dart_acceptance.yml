@@ -10,15 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        sdk: [3.8.0, stable, beta, dev]
+        sdk: [3.0, stable, beta, dev]
     steps:
       - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ matrix.sdk }}
 
-      - run: dart pub get
-      - run: dart format . --output=none --set-exit-if-changed
-      - run: dart analyze
-      - run: dart test
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Check Formatting
+        if: matrix.sdk == 'stable'
+        run: dart format . --output=none --set-exit-if-changed
+
+      - name: Analyze Code
+        run: dart analyze
+
+      - name: Downgrade dependencies for legacy testing
+        if: matrix.sdk == '3.0'
+        run: dart pub downgrade
+
+      - name: Run Tests
+        run: dart test
