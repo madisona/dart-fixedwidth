@@ -49,11 +49,12 @@ class ListField<T extends Record> extends FixedWidthField {
 
     var records = <T>[];
     var recordLength = singleRecordLength;
+    var pos = 0;
     for (var i = 0; i < occurs; i++) {
       var record = recordFactory();
-      record.populateFromString(val.substring(0, recordLength));
+      record.populateFromString(val.substring(pos, pos + recordLength));
       records.add(record);
-      val = val.substring(recordLength, val.length);
+      pos += recordLength;
     }
     return records;
   }
@@ -61,13 +62,16 @@ class ListField<T extends Record> extends FixedWidthField {
   @override
   List<T>? populateFromObj(val) {
     if (val == null) return null;
+    if (val is! Iterable) {
+      throw FieldValueException('Value must be an Iterable');
+    }
     if (val.length != occurs) {
       throw FieldLengthException(
           'Must set the same number of records as `occurs` ($occurs)');
     }
-    val.forEach((dynamic v) {
+    for (final v in val) {
       assert(v is T);
-    });
+    }
     return val is List<T> ? val : List<T>.from(val);
   }
 

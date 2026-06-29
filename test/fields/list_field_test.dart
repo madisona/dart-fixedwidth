@@ -118,5 +118,26 @@ void main() {
       expect(field.toRecord([recordAlt1, recordAlt2]),
           equals("alt  00005oth  00008"));
     });
+
+    test('throws error when setting a value that is not an Iterable or String',
+        () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      expect(() {
+        field.value = 123;
+      }, throwsA(isA<FieldValueException>()));
+    });
+
+    test('can accept other Iterables like Set', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      var record1 = SimpleRecord()
+        ..textField.value = "one"
+        ..intField.value = 130;
+      var record2 = SimpleRecord()
+        ..textField.value = "two"
+        ..intField.value = 10;
+      field.value = {record1, record2};
+      expect(field.value, isA<List<SimpleRecord>>());
+      expect(field.value, equals([record1, record2]));
+    });
   });
 }
