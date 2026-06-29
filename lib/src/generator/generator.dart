@@ -21,14 +21,18 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
     }
 
     final className = element.name;
+    // ignore: unnecessary_null_comparison
     if (className == null) return '';
     final fieldsInfo = <String>[];
 
     for (final field in element.fields) {
       // Ignore static, synthetic (getters/setters), and private fields
-      if (field.isStatic || field.nonSynthetic != field || field.isPrivate) continue;
+      if (field.isStatic || field.nonSynthetic != field || field.isPrivate) {
+        continue;
+      }
 
       final fieldName = field.name;
+      // ignore: unnecessary_null_comparison
       if (fieldName == null) continue;
 
       final type = field.type;
