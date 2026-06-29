@@ -60,7 +60,7 @@ abstract class Record {
     }
   }
 
-  /// returns the list of FixedWidthField instance variables in order defined
+  /// Returns the list of FixedWidthField or Record instance variables in order defined.
   Iterable<dynamic> get fields;
 
   /// Turns the record into the flat, properly padded string version
@@ -74,5 +74,5 @@ abstract class Record {
 
   /// Returns the total length of the defined Record
   int get length =>
-      fields.fold(0, (prev, element) => prev + element.length as int);
+      fields.fold(0, (prev, element) => prev + (element.length as int));
 }
