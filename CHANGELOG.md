@@ -1,4 +1,7 @@
 # Changelog
+## 0.6.2
+- Fix constraints again
+
 ## 0.6.1
 - Fix constraints
 
