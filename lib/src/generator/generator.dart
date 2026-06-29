@@ -21,16 +21,20 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
     }
 
     final className = element.name;
+    if (className == null) return '';
     final fieldsInfo = <String>[];
 
     for (final field in element.fields) {
       // Ignore static, synthetic (getters/setters), and private fields
-      if (field.isStatic || field.isSynthetic || field.isPrivate) continue;
+      if (field.isStatic || field.nonSynthetic != field || field.isPrivate) continue;
+
+      final fieldName = field.name;
+      if (fieldName == null) continue;
 
       final type = field.type;
       if (type is InterfaceType) {
         if (_isFixedWidthOrRecord(type)) {
-          fieldsInfo.add(field.name);
+          fieldsInfo.add(fieldName);
         }
       }
     }
