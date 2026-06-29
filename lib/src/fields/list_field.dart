@@ -81,6 +81,5 @@ class ListField<T extends Record> extends FixedWidthField {
   @override
   int get length => singleRecordLength * occurs;
 
-  int get singleRecordLength =>
-      _singleRecordLength ??= recordFactory().length.toInt();
+  int get singleRecordLength => _singleRecordLength ??= recordFactory().length;
 }

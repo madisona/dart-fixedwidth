@@ -4,12 +4,6 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
-class _FieldInfo {
-  final String name;
-  final String type;
-  _FieldInfo(this.name, this.type);
-}
-
 /// Generator to find all FixedWidthField or Record instance variables
 /// in a class annotated with @fixedWidth and generate an ordered fields mixin.
 class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
@@ -27,7 +21,7 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
     }
 
     final className = element.name;
-    final fieldsInfo = <_FieldInfo>[];
+    final fieldsInfo = <String>[];
 
     for (final field in element.fields) {
       // Ignore static, synthetic (getters/setters), and private fields
@@ -36,10 +30,7 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
       final type = field.type;
       if (type is InterfaceType) {
         if (_isFixedWidthOrRecord(type)) {
-          fieldsInfo.add(_FieldInfo(
-            field.name,
-            type.getDisplayString(withNullability: true),
-          ));
+          fieldsInfo.add(field.name);
         }
       }
     }
@@ -50,16 +41,10 @@ class FixedWidthGenerator extends GeneratorForAnnotation<FixedWidthRecord> {
       fieldsBody = '@override\n  Iterable<dynamic> get fields => [];';
     } else {
       final fieldsList =
-          fieldsInfo.map((info) => 'self.${info.name},').join('\n      ');
-      fieldsBody = '''@override
-  Iterable<dynamic> get fields {
-    final self = this as $className;
-    return [
-      $fieldsList
-    ];
-  }''';
+          fieldsInfo.map((name) => 'self.$name,').join('\n      ');
+      fieldsBody =
+          '''@override\n  Iterable<dynamic> get fields {\n    final self = this as $className;\n    return [\n      $fieldsList\n    ];\n  }''';
     }
-
     return '''
 mixin $mixinName on Record {
   $fieldsBody

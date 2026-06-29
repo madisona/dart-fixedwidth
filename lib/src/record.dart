@@ -49,14 +49,14 @@ abstract class Record {
     var pos = 0;
     for (var field in fields) {
       field.autoTruncate = autoTruncate;
+      final int fieldLength = field.length as int;
       if (field is Record) {
-        field.populateFromString(
-            record.substring(pos, (pos + field.length) as int?));
+        field.populateFromString(record.substring(pos, pos + fieldLength));
       } else {
-        field.value = record.substring(pos, (pos + field.length) as int?);
+        field.value = record.substring(pos, pos + fieldLength);
       }
 
-      pos += field.length as int;
+      pos += fieldLength;
     }
   }
 
@@ -73,5 +73,6 @@ abstract class Record {
   }
 
   /// Returns the total length of the defined Record
-  num get length => fields.fold(0, (prev, element) => prev + element.length);
+  int get length =>
+      fields.fold(0, (prev, element) => prev + element.length as int);
 }
