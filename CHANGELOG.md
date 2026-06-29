@@ -1,4 +1,7 @@
 # Changelog
+## 0.6.1
+- Fix constraints
+
 ## 0.6.0
 - Removed dart:mirrors dependency. Using code generation now.
   This is a breaking change. View the Readme for usage instructions.
