@@ -1,7 +1,10 @@
 import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
-class TestRecord extends Record {
+part 'record_test.g.dart';
+
+@fixedWidth
+class TestRecord extends Record with _$TestRecordFields {
   StringField firstName = StringField(10, defaultValue: "John");
   StringField middle = StringField(5);
   StringField lastName = StringField(10);

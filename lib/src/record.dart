@@ -1,6 +1,4 @@
-import 'dart:mirrors';
 import 'exceptions.dart' show FieldLengthException;
-import 'fields/fixedwidth_field.dart' show FixedWidthField;
 
 /// The base class for a fixed width record definition.
 ///
@@ -32,7 +30,6 @@ import 'fields/fixedwidth_field.dart' show FixedWidthField;
 ///
 abstract class Record {
   bool autoTruncate = false;
-  Iterable<dynamic>? _fieldsList;
 
   Record();
 
@@ -51,46 +48,31 @@ abstract class Record {
 
     var pos = 0;
     for (var field in fields) {
+      field.autoTruncate = autoTruncate;
+      final int fieldLength = field.length as int;
       if (field is Record) {
-        field.populateFromString(
-            record.substring(pos, (pos + field.length) as int?));
+        field.populateFromString(record.substring(pos, pos + fieldLength));
       } else {
-        field.value = record.substring(pos, (pos + field.length) as int?);
+        field.value = record.substring(pos, pos + fieldLength);
       }
 
-      pos += field.length as int;
+      pos += fieldLength;
     }
   }
 
-  /// returns the list of FixedWidthField instance variables in order defined
-  Iterable<dynamic> get fields {
-    if (_fieldsList == null) {
-      var im = reflect(this);
-      var cm = im.type;
-
-      var fieldList = [];
-
-      for (var s in cm.declarations.keys) {
-        try {
-          var field = im.getField(s).reflectee;
-          field.autoTruncate = autoTruncate;
-          if (field is FixedWidthField || field is Record) {
-            fieldList.add(field);
-          }
-        } on NoSuchMethodError {
-          // ignore
-        }
-      }
-
-      _fieldsList = fieldList;
-    }
-    return _fieldsList!;
-  }
+  /// Returns the list of FixedWidthField or Record instance variables in order defined.
+  Iterable<dynamic> get fields;
 
   /// Turns the record into the flat, properly padded string version
   @override
-  String toString() => fields.map((e) => e.toString()).join('');
+  String toString() {
+    return fields.map((e) {
+      e.autoTruncate = autoTruncate;
+      return e.toString();
+    }).join('');
+  }
 
   /// Returns the total length of the defined Record
-  num get length => fields.fold(0, (prev, element) => prev + element.length);
+  int get length =>
+      fields.fold(0, (prev, element) => prev + (element.length as int));
 }

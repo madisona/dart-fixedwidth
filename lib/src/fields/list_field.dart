@@ -1,5 +1,5 @@
-import 'dart:mirrors';
 import '../exceptions.dart';
+import '../record.dart';
 import 'fixedwidth_field.dart';
 
 /// ListField can be used similar to a COBOL OCCURS. A particular record
@@ -26,62 +26,64 @@ import 'fixedwidth_field.dart';
 ///
 ///   class Contact extends Record {
 ///     StringField name = StringField(100);
-///     ListField phone_number = ListField(PhoneNumber, occurs: 3);
+///     ListField phone_number = ListField(() => PhoneNumber(), occurs: 3);
 ///     StringField email = StringField(100);
 ///
 ///     Contact();
 ///     Contact.fromString(String record) : super.fromString(record);
 ///   }
 ///
-class ListField extends FixedWidthField {
-  late ClassMirror clsMirror;
-  int occurs;
+class ListField<T extends Record> extends FixedWidthField {
+  final T Function() recordFactory;
+  final int occurs;
+  int? _singleRecordLength;
 
-  ListField(recordClass, {this.occurs = 1}) : super(0) {
-    clsMirror = reflectClass(recordClass);
-  }
+  ListField(this.recordFactory, {this.occurs = 1}) : super(0);
 
   @override
-  List populateFromString(String val) {
+  List<T> populateFromString(String val) {
     if (val.length != length) {
       throw FieldLengthException(
-          'Value is ${val.length} characters, but must be $length}');
+          'Value is ${val.length} characters, but must be $length');
     }
 
-    var records = [];
+    var records = <T>[];
     var recordLength = singleRecordLength;
+    var pos = 0;
     for (var i = 0; i < occurs; i++) {
-      records.add(_getEmptyRecord(
-          'fromString', [val.substring(0, singleRecordLength)]));
-      val = val.substring(recordLength, val.length);
+      var record = recordFactory();
+      record.populateFromString(val.substring(pos, pos + recordLength));
+      records.add(record);
+      pos += recordLength;
     }
     return records;
   }
 
   @override
-  List populateFromObj(val) {
+  List<T>? populateFromObj(val) {
+    if (val == null) return null;
+    if (val is! Iterable) {
+      throw FieldValueException('Value must be an Iterable');
+    }
     if (val.length != occurs) {
       throw FieldLengthException(
           'Must set the same number of records as `occurs` ($occurs)');
     }
-    val.forEach((var v) {
-      assert(v.runtimeType == clsMirror.reflectedType);
-    });
-    return val;
+    for (final v in val) {
+      assert(v is T);
+    }
+    return val is List<T> ? val : List<T>.from(val);
   }
 
   @override
   String toRecord(val) {
-    return rawVal == null
-        ? _getEmptyRecord().toString() * occurs
-        : rawVal.map((v) => v.toString()).join('');
+    return val == null
+        ? recordFactory().toString() * occurs
+        : val.map((v) => v.toString()).join('');
   }
 
   @override
   int get length => singleRecordLength * occurs;
 
-  int get singleRecordLength => _getEmptyRecord().length;
-
-  dynamic _getEmptyRecord([String symbolName = '', List? args]) =>
-      clsMirror.newInstance(Symbol(symbolName), args ?? []).reflectee;
+  int get singleRecordLength => _singleRecordLength ??= recordFactory().length;
 }

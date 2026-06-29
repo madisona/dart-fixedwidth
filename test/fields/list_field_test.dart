@@ -1,7 +1,10 @@
 import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
-class SimpleRecord extends Record {
+part 'list_field_test.g.dart';
+
+@fixedWidth
+class SimpleRecord extends Record with _$SimpleRecordFields {
   StringField textField = StringField(5);
   IntegerField intField = IntegerField(5);
 
@@ -9,7 +12,8 @@ class SimpleRecord extends Record {
   SimpleRecord.fromString(super.record) : super.fromString();
 }
 
-class RecordTwo extends Record {
+@fixedWidth
+class RecordTwo extends Record with _$RecordTwoFields {
   StringField firstName = StringField(10);
   StringField lastName = StringField(10);
   SimpleRecord address = SimpleRecord();
@@ -22,7 +26,7 @@ class RecordTwo extends Record {
 void main() {
   group('ListField tests', () {
     test('value is records when starting with records', () {
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       var record1 = SimpleRecord()
         ..textField.value = "one"
         ..intField.value = 130;
@@ -35,7 +39,7 @@ void main() {
     });
 
     test('value is record list when starting with string', () {
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       field.value = "ABCDE11111VWXYZ00999";
       var records = field.value;
       expect(records.length, 2);
@@ -48,7 +52,7 @@ void main() {
     });
 
     test('throws error when record length doesnt match occurs', () {
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       var record1 = SimpleRecord();
       expect(() {
         field.value = [record1];
@@ -56,7 +60,7 @@ void main() {
     });
 
     test('throws error if the records are not all the apporriate class', () {
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       var record1 = SimpleRecord();
       var record2 = RecordTwo();
       expect(() {
@@ -65,27 +69,75 @@ void main() {
     });
 
     test('length returns total length of all expected records', () {
-      var field = ListField(SimpleRecord, occurs: 4);
+      var field = ListField(() => SimpleRecord(), occurs: 4);
       expect(field.length, 40);
     });
 
     test('singleRecordLength returns length of a single record', () {
-      var field = ListField(SimpleRecord, occurs: 4);
+      var field = ListField(() => SimpleRecord(), occurs: 4);
       expect(field.singleRecordLength, 10);
     });
 
     test('Errors when fixed width string is not properly formatted', () {
       var str = "ABCDE11111VWXYZ00999EXTRA";
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       expect(() {
         field.value = str;
       }, throwsA(isA<FieldLengthException>()));
     });
 
     test('toString returns padded length when value is null', () {
-      var field = ListField(SimpleRecord, occurs: 2);
+      var field = ListField(() => SimpleRecord(), occurs: 2);
       expect(field.value, null);
       expect(field.toString(), equals("     00000     00000"));
+    });
+
+    test('allows setting value to null', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      field.value = null;
+      expect(field.value, null);
+    });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      var record1 = SimpleRecord()
+        ..textField.value = "one"
+        ..intField.value = 130;
+      var record2 = SimpleRecord()
+        ..textField.value = "two"
+        ..intField.value = 10;
+      field.value = [record1, record2];
+
+      var recordAlt1 = SimpleRecord()
+        ..textField.value = "alt"
+        ..intField.value = 5;
+      var recordAlt2 = SimpleRecord()
+        ..textField.value = "oth"
+        ..intField.value = 8;
+
+      expect(field.toRecord([recordAlt1, recordAlt2]),
+          equals("alt  00005oth  00008"));
+    });
+
+    test('throws error when setting a value that is not an Iterable or String',
+        () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      expect(() {
+        field.value = 123;
+      }, throwsA(isA<FieldValueException>()));
+    });
+
+    test('can accept other Iterables like Set', () {
+      var field = ListField(() => SimpleRecord(), occurs: 2);
+      var record1 = SimpleRecord()
+        ..textField.value = "one"
+        ..intField.value = 130;
+      var record2 = SimpleRecord()
+        ..textField.value = "two"
+        ..intField.value = 10;
+      field.value = {record1, record2};
+      expect(field.value, isA<List<SimpleRecord>>());
+      expect(field.value, equals([record1, record2]));
     });
   });
 }

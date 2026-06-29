@@ -5,9 +5,9 @@ class IntegerField extends FixedWidthField {
   IntegerField(super.length, {int? super.defaultValue});
 
   @override
-  int populateFromString(val) {
+  int populateFromString(String val) {
     try {
-      return int.parse(val.toString());
+      return int.parse(val);
     } on FormatException {
       throw FieldValueException("'$val' is not valid input");
     }

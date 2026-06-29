@@ -1,12 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:fixedwidth/fixedwidth.dart';
 
-class PhoneNumber extends Record {
+part 'fixedwidth_example.g.dart';
+
+@fixedWidth
+class PhoneNumber extends Record with _$PhoneNumberFields {
   IntegerField areaCode = IntegerField(3);
   IntegerField prefix = IntegerField(3);
   IntegerField lineNumber = IntegerField(4);
 
-  PhoneNumber();
+  PhoneNumber() : super();
   PhoneNumber.fromString(super.record) : super.fromString();
 }
 
@@ -14,7 +17,8 @@ class PhoneNumber extends Record {
 ///
 /// The phone_number field is a `RecordField` which is comprised of
 /// an entire record.
-class PersonRecord extends Record {
+@fixedWidth
+class PersonRecord extends Record with _$PersonRecordFields {
   StringField firstName = StringField(20);
   StringField lastName = StringField(20);
   DateTimeField dob = DateTimeField(10, format: DateFormat("yyyy-MM-dd"));
@@ -22,11 +26,11 @@ class PersonRecord extends Record {
   DecimalField amountDue = DecimalField(8, decimals: 2);
   PhoneNumber phoneNumber = PhoneNumber();
 
-  PersonRecord();
+  PersonRecord() : super();
   PersonRecord.fromString(super.record) : super.fromString();
 }
 
-main() {
+void main() {
   // You can take a Record, populate it, and turn it to a fixed width string.
   var record = PersonRecord()
     ..firstName.value = "John"
@@ -44,8 +48,8 @@ main() {
   // dart object
   var record2 = PersonRecord.fromString(
       "Benjamin            Franklin            1706-01-171600003.002151112222");
-  print(record2.firstName);
-  print(record2.lastName);
+  print(record2.firstName.value);
+  print(record2.lastName.value);
   print(record2.dob.value);
   print(record2.numSiblings.value);
   print(record2.amountDue.value);

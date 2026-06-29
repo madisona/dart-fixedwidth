@@ -12,7 +12,7 @@ class ImpliedDecimalField extends FixedWidthField {
       {num? super.defaultValue, this.decimals = 2});
 
   @override
-  num populateFromString(dynamic val) {
+  num populateFromString(String val) {
     // If we get a string we need to put the implied decimal back.
     try {
       var numberPart = val.substring(0, val.length - decimals);

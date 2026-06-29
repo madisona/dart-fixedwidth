@@ -57,7 +57,15 @@ void main() {
       var field = BooleanField();
       expect(() {
         field.value = "X";
-      }, throwsA(isA<FieldValueException>()));
+      },
+          throwsA(predicate((e) =>
+              e is FieldValueException && e.message == "'X' is not valid.")));
+    });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = BooleanField();
+      field.value = true;
+      expect(field.toRecord(false), equals("N"));
     });
   });
 }

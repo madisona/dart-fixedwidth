@@ -1,7 +1,10 @@
 import 'package:fixedwidth/fixedwidth.dart';
 import 'package:test/test.dart';
 
-class IntRecordSample extends Record {
+part 'integer_field_test.g.dart';
+
+@fixedWidth
+class IntRecordSample extends Record with _$IntRecordSampleFields {
   IntegerField account = IntegerField(3);
   IntegerField txnAmount = IntegerField(5);
 
@@ -45,6 +48,12 @@ void main() {
       expect(() {
         IntRecordSample.fromString("015A0950");
       }, throwsA(isA<FieldValueException>()));
+    });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = IntegerField(5);
+      field.value = 100;
+      expect(field.toRecord(250), equals("00250"));
     });
   });
 }

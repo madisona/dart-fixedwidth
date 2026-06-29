@@ -68,5 +68,16 @@ void main() {
       expect(field.value, equals(99999.99));
       expect(field.toString(), equals("9999999+"));
     });
+
+    test('toRecord handles null value correctly', () {
+      var field = SignedImpliedDecimalField(6, decimals: 2);
+      expect(field.toRecord(null), equals("00000+"));
+    });
+
+    test('toRecord uses passed in value rather than member state value', () {
+      var field = SignedImpliedDecimalField(6, decimals: 2);
+      field.value = 100.25;
+      expect(field.toRecord(-250.50), equals("25050-"));
+    });
   });
 }

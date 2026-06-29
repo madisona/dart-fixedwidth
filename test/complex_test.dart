@@ -5,7 +5,10 @@ import 'package:test/test.dart';
 import 'package:intl/intl.dart';
 import 'package:fixedwidth/fixedwidth.dart';
 
-class Phone extends Record {
+part 'complex_test.g.dart';
+
+@fixedWidth
+class Phone extends Record with _$PhoneFields {
   IntegerField areaCode = IntegerField(3);
   IntegerField prefix = IntegerField(3);
   IntegerField lineNumber = IntegerField(4);
@@ -14,17 +17,19 @@ class Phone extends Record {
   Phone.fromString(super.record) : super.fromString();
 }
 
-class Person extends Record {
+@fixedWidth
+class Person extends Record with _$PersonFields {
   StringField firstName = StringField(10);
   StringField middle = StringField(5);
   StringField lastName = StringField(10);
-  ListField phoneNumbers = ListField(Phone, occurs: 3);
+  ListField<Phone> phoneNumbers = ListField(() => Phone(), occurs: 3);
 
   Person() : super();
   Person.fromString(super.record) : super.fromString();
 }
 
-class Address extends Record {
+@fixedWidth
+class Address extends Record with _$AddressFields {
   StringField address = StringField(60);
   StringField city = StringField(30);
   StringField state = StringField(2);
@@ -34,7 +39,8 @@ class Address extends Record {
   Address.fromString(super.record) : super.fromString();
 }
 
-class Contact extends Record {
+@fixedWidth
+class Contact extends Record with _$ContactFields {
   Person person = Person();
   Address address = Address();
   Person emergencyContact = Person();

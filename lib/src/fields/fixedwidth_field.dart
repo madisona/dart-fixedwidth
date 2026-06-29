@@ -56,7 +56,7 @@ abstract class FixedWidthField {
   /// `toRecord` will be overridden in each subclass
   ///
   /// its job is to turn the value into a properly formatted string
-  String toRecord(dynamic val) => (value ?? '').padRight(length);
+  String toRecord(dynamic val) => (val?.toString() ?? '').padRight(length);
 
   /// toString turns the value to a string. Don't override this directly
   /// in subclasses. Instead - use `toRecord`.

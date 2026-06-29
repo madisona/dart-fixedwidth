@@ -16,7 +16,7 @@ class NullBooleanField extends FixedWidthField {
     } else if ([null, '', ' '].contains(val)) {
       return null;
     } else {
-      throw FieldValueException("'$value' is not valid.");
+      throw FieldValueException("'$val' is not valid.");
     }
   }
 
