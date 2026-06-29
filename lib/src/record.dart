@@ -66,10 +66,10 @@ abstract class Record {
   /// Turns the record into the flat, properly padded string version
   @override
   String toString() {
-    for (var field in fields) {
-      field.autoTruncate = autoTruncate;
-    }
-    return fields.map((e) => e.toString()).join('');
+    return fields.map((e) {
+      e.autoTruncate = autoTruncate;
+      return e.toString();
+    }).join('');
   }
 
   /// Returns the total length of the defined Record
