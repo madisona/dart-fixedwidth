@@ -1,4 +1,7 @@
 # Changelog
+## 0.6.3
+- Fixing code generation for packages that utilize this.
+
 ## 0.6.2
 - Fix constraints again
 
